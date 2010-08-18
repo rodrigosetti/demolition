@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ block.super }}
+    
+    <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery.form.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+ 
+    <script type="text/javascript"> 
+        // wait for the DOM to be loaded 
+        $(document).ready(function() { 
+
+            // bind forms to ajax
+            $('#user_data').ajaxForm(); 
+            $('#user_password').ajaxForm(); 
+        }); 
+    </script> 
+{% endblock %}
+
+{% block content %}
+
+<div id="user">
+    <h1>
+        <span id="first_name">{{ user.first_name }}</span> <span id="last_name">{{ user.last_name }}</span>
+    </h1>
+
+    <form id="user_data" action="{% url demolition.events.views.account_save %}" method="post">
+        <label for="email">Email</label>:
+        <input id="email" name="email" type="text" value="{{ user.email }}" />
+        <label for="phone">Phone</label>:
+        <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}" />
+        <label for="gender">Gender</label>:
+        <select id="gender" name="gender">
+            <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
+            <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>Female</option>
+        </select>
+        <input id="submit_user" name="submit_user" type="submit" value="save" />
+    </form>
+
+    <form id="user_password" action="{% url demolition.events.views.password_change %}" method="post">
+        <label for="password">New Password</label>:
+        <input id="password" name="password" type="password" value="" />
+        <label for="password_confirm">Confirm Password</label>:
+        <input id="password_confirm" name="password_confirm" type="password" value=""/>
+        <input id="submit_password" name="submit_password" type="submit" value="change password" />        
+    </form>
+</div>
+
+<div id="participations">
+    <ul id="events">
+        {% for event in events %}
+            {% if not event.is_closed %}
+                <li>
+                    <a href="javascript:void(0)"
+                       onclick="$('#participation').load('{% url demolition.events.views.participation_details event.slug %}')"
+                       title="{{ event.title }}">
+                        {{ event.title }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <div id="participation">
+    </div>
+</div>
+
+{% endblock %}

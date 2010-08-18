@@ -1,0 +1,8 @@
+<h2 class="event_title">{{ event.title }}</h2>
+
+<p>In order to participate in this event you must get and invitation</p>
+
+<button 
+    onclick="$.post('{% url demolition.events.views.invitation event.slug %}', function(data) { $(this).replaceWith('<p>Invitation sent</p>'); });" >
+Request an invitation now
+</button>

@@ -1,0 +1,82 @@
+
+<div id="dates">
+{%if participation.confirmed %}
+
+    {% if participation.paid %}
+    <p>Confirmed dates:</p>
+    <ul id="confirmed_dates">
+        {% for date in possible_dates %}
+            {% if date.confirmed %}
+            <li>{{ date }} {%if ok %}OK{% endif %}</li>
+            {%endif%}
+        {% endfor %}
+    </ul>
+
+    {% else %}
+
+    <p>Please check dates you confirm to go:</p>
+    <form id="confirm_dates" method="post" 
+          action="{%url demolition.events.views.participation_save event.slug %}">
+        <ul id="dates">
+            {% for date in possible_dates %}
+                {% if date.confirmed %}
+                <li>
+                    <label for="date_{{ date.id }}">{{ date }}</label>
+                    <input id="date_{{ date.id }}" name="date_{{ date.id }}" 
+                           type="checkbox" {%if ok %}checked{% endif %}/>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </form>
+    {% endif %}
+
+{% else %}
+
+    <p>Please check dates you have avaliability to go:</p>
+    <form id="possible_dates" method="post" 
+          action="{%url demolition.events.views.participation_save event.slug %}">
+        <ul id="dates">
+            {% for date, ok in dates %}
+            <li>
+                <label for="date_{{ date.id }}">{{ date }}</label>
+                <input id="date_{{ date.id }}" name="date_{{ date.id }}"
+                       type="checkbox" {%if ok %}checked{% endif %}/>
+            </li>
+            {% endfor %}
+        </ul>
+    </form>
+
+{% endif %}
+</div>
+
+<form id="preferences" method="post" action="{%url demolition.events.views.participation_save event.slug %}">
+
+    <label for="drinking">Drinking</label>:
+    <input id="drinking" name="drinking"type="checkbox" {% if participation.drinking %}checked{% endif %}/>
+
+    {% if event.needs_ride %}
+    <label for="self_transportation">Self transporation</label>:
+    <input id="self_transportation" name="self_transportation"type="checkbox" {% if participation.self_transportation %}checked{% endif %}/>
+    <label for="offer_ride">Offer Ride</label>:
+    <input id="offer_ride" name="offer_ride"type="checkbox" {% if participation.offer_ride %}checked{% endif %}/>
+    {% endif %}
+
+    <input id="submit_prefs" name="submit_prefs" type="submit" value="Save"/>
+</form>
+
+<div id="companions">
+</div>
+
+{% if event.confirmed %}
+
+{% if participation.paid %}
+    <p>Paiment confirmed</p>  
+{% else %}
+    <p>Charge value: ...</p>
+{% endif %}
+
+{% endif %}
+
+
+

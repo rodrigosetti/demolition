@@ -6,79 +6,179 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery-1.4.2.min.js"></script> 
  
     <script type="text/javascript">
-		$(function() {
 
-		    $('.error, .loader, .work_done').hide();
-		
-		    $("#submit_user").click(function() {
+        $(document).ready(function() {
+            $('.hidden_submit').hide();
+            $('#user_forms').hide();
+        });
 
-				$('#submit_user').hide();
-				$('#user_data_loader').show();
-				$('#user_data_done').hide();
+        {% comment %}
+            Ajax form ritual(show loader, hide button, show message) to
+            submit user data
+        {% endcomment %}
+	    function submituser() {
 
-		        var dataString = 'email='+ $('input#email').val() + 
-								 '&phone=' + $('input#phone').val() + 
-								 '&gender=' + $('select#gender').val();
+			// validate
+			$('#user_data_error').hide();
 
-		        $.ajax({
-		          type: "POST",
-		          url: "{% url demolition.events.views.account_save %}",
-		          data: dataString,
-		          success: function() {
-		          	$('#user_data_loader').hide();
-					$('#user_data_done').show();
-					$('#user_data_done').fadeOut(4000);
-		          }
-		        });
-		        return false;
-		    });
-		
-		    $("#submit_password").click(function() {
+			first_name = $('input#first_name').val();
+			last_name = $('input#last_name').val();
+            phone = $('input#phone').val()
+			email = $('input#email').val();
+			
+			if (first_name == '' || last_name == '' ||
+                email == '' || phone == '') {
+				$('#user_data_error').slideDown();
+				return false;
+			}
 
-				// validate
-				$('#password_error').hide();
-				
-				passwd = $('input#password').val();
-				passwdc = $('input#password_confirm').val();
-				
-				if (passwd == '' || passwd != passwdc) {
-					$('#password_error').slideDown();
-					return false;
-				}
-				
-				// send data
-				$('#submit_password').hide();
-				$('#password_change_loader').show();
-				$('#password_done').hide();
+            // send data
+			$('#submit_user').hide();
+			$('#user_data_loader').show();
+			$('#user_data_done').hide();
 
-		        var dataString = 'password='+ passwd + 
-								 '&password_confirm=' + passwdc;
+	        var data = {'first_name': first_name,
+                       'last_name': last_name,
+                       'email': email, 
+					   'phone': phone, 
+					   'gender': $('select#gender').val()};
 
-		        $.ajax({
-		          type: "POST",
-		          url: "{% url demolition.events.views.password_change %}",
-		          data: dataString,
-		          success: function() {
-		            $('#password_change_loader').hide();
-					$('#password_done').show();
-					$('#password_done').fadeOut(4000);
-		          }
-		        });
-		
-				// clear
-				$('input#password').val('');
-				$('input#password_confirm').val('');
-		
-		        return false;
-		    });
-		});
-		
-		function request_invitation(post_url) {
+	        $.ajax({
+	          type: "POST",
+	          url: "{% url demolition.events.views_post.account_save %}",
+	          data: data,
+	          success: function() {
+	          	$('#user_data_loader').hide();
+				$('#user_data_done').show();
+				$('#user_data_done').fadeOut(4000);
+
+                // update full name show
+                $('#full_name').html(first_name + ' ' + last_name);
+	          }
+	        });
+
+	        return false;
+	    };
+
+        {% comment %}
+            Ajax form ritual(show loader, hide button, show message) to
+            change password.
+        {% endcomment %}
+	    function submitpassword() {
+
+			// validate
+			$('#password_error').hide();
+			
+			passwd = $('input#password').val();
+			passwdc = $('input#password_confirm').val();
+			
+			if (passwd == '' || passwd != passwdc) {
+				$('#password_error').slideDown();
+				return false;
+			}
+			
 			// send data
+			$('#submit_password').hide();
+			$('#password_change_loader').show();
+			$('#password_done').hide();
+
+	        var data = {'password': passwd,
+					    'password_confirm': passwdc};
+
+	        $.ajax({
+	          type: "POST",
+	          url: "{% url demolition.events.views_post.password_change %}",
+	          data: data,
+	          success: function() {
+	            $('#password_change_loader').hide();
+				$('#password_done').show();
+				$('#password_done').fadeOut(4000);
+	          }
+	        });
+	
+			// clear
+			$('input#password').val('');
+			$('input#password_confirm').val('');
+
+	        return false;
+	    };
+
+        {% comment %}
+            Ajax form ritual(show loader, hide button, show message) to
+            save participation preferences
+        {% endcomment %}
+        function participationprefs(post_url) {
+			// send data
+			$('#prefs_loader').show();
+			$('#submit_prefs').hide();
+	
+            data = {};
+            if ($('#drinking').is(':checked'))
+                data['drinking'] = 'on';
+            if ($('#self_transportation').is(':checked'))
+                data['self_transportation'] = 'on';
+            if ($('#offer_ride').is(':checked'))
+                data['offer_ride'] = 'on';
+
+			$.ajax({
+                    type: "POST",
+                    url: post_url,
+                    data: data,
+                    success: function() {
+                        $('#prefs_loader').hide();
+                        $('#prefs_done').show();
+                        $('#prefs_done').fadeOut(4000);
+                    }
+                });
+
+            return false;
+        };
+
+        {% comment %}
+            Ajax form ritual(show loader, hide button, show message) to
+            save participation dates
+        {% endcomment %}
+        function savedates(post_url) {
+            // compose data dinamicaly from date_<id> objects
+            data = {};
+            $('#dates li input:checked').each(function(idx, item) {
+                data[item.id] = "on";
+            });
+
+			// show and hide dynamic form
+			$('#dates_loader').show();
+			$('#submit_dates').hide();
+
+            // send data
+			$.ajax({
+                    type: "POST",
+                    url: post_url,
+                    data: data,
+                    success: function() {
+                        $('#dates_loader').hide();
+                        $('#dates_done').show();
+                        $('#dates_done').fadeOut(4000);
+                    }
+                });
+
+            return false;
+        }
+
+        {% comment %}
+            When a user request a invitation from a event page which he
+            does not have a participation object this function is called.
+            It does the Ajax form ritual(show loader, hide button, show message)
+            and sends an Ajax POST request to the proper url in order to create
+            the Participation object related.
+        {% endcomment %}
+		function requestinvitation(post_url) {
+
+			// show and hide dynamic form
 			$('#invitation_loader').show();
 			$('#submit_invitation_req').hide();
 			
-			 $.ajax({
+            // send data
+			$.ajax({
 		          type: "POST",
 		          url: post_url,
 		          success: function() {
@@ -86,8 +186,108 @@
 					$('#invitation_done').fadeIn();
 		          }
 		        });
+
+            return false;
 		};
-		
+
+        {% comment %}
+            Tab behavior: when a event link is clicked this function is called
+            in order to show the "loader" gif and load the proper participation
+            details HTML into the #participation container.
+        {% endcomment %}
+        function loadparticipation(post_url) {
+
+            $('#participation').html(
+                '<img src="{{ MEDIA_URL }}image/loader.gif" class="loader" id="participation_loading" alt="">'
+            );
+            $('#participation').load(post_url, function() {
+                $('#participation .hidden_submit').hide();
+            });
+
+            return false;
+        };
+
+        {% comment %}
+            Simple toggler to show and hide user edition division
+        {% endcomment %}
+        var editing_user = false;
+        function toggleuseredit() {
+
+            if (editing_user) {
+                $('#user_forms').slideUp();
+                $('#collapse_edit').attr('src', '{{ MEDIA_URL }}image/plus.gif');
+            }
+            else {
+                $('#user_forms').slideDown();
+                $('#collapse_edit').attr('src', '{{ MEDIA_URL }}image/minus.gif');
+            }
+
+            editing_user = !editing_user;
+        };
+
+        {% comment %}
+            Adds a new li item with a conpanion form into ul#companions list
+        {% endcomment %}
+        function addcompanion(post_url) {
+
+            // make call to url in order to obtain html
+            $.post(post_url, {}, function(data) {
+                // append li element html into list
+                $('ul#companions').append(data);
+                $('ul#companions li:last-child').hide();
+                $('ul#companions li:last-child').slideDown();
+                $('ul#companions li:last-child .hidden_submit').hide();
+	          });
+
+            return false;
+        };
+
+        {% comment %}
+            Deletes companion item calling Ajax method and removing from list
+        {% endcomment %}
+        function deletecompanion(post_url, id) {
+
+		    $.ajax({
+	          type: "POST",
+              data: {"id": id},
+	          url: post_url,
+	          success: function(data) {            
+                // slide up element(hide)
+                $('#companion_' + id).slideUp('slow', function() {
+                    // remove element
+                    $('#companion_' + id).remove();
+                });
+	          }
+	        });
+
+            return false;
+        };
+
+        {% comment %}
+            Edit companion item calling Ajax form
+        {% endcomment %}
+        function savecompanion(post_url, id) {
+
+            // gather data
+            data = { 'id' : id,
+                    'gender': $('#companion_form_' + id + ' select[name=gender]').val()};
+
+            if ( $('#companion_form_' + id + ' input[name=drinking]').is(':checked') )
+                data['drinking'] = 'on';
+
+            // show and hide dynamic form
+			$('#companion_loader_' + id).show();
+			$('#submit_companion_' + id).hide();
+			
+            // send data
+			$.post(post_url, data, function() {
+		            $('#companion_loader_' + id).hide();
+                    $('#companion_done_' + id).show()
+					$('#companion_done_' + id).fadeOut(4000);
+		          });
+
+            return false;
+        };
     </script>
 
 {% endblock %}
@@ -95,55 +295,82 @@
 {% block content %}
 
 <div id="user">
-    <h1>
-        <span id="first_name">{{ user.first_name }}</span> <span id="last_name">{{ user.last_name }}</span>
-    </h1>
+    <p id="user_head">
+        <spam id="full_name">
+            {{ user.first_name }} {{ user.last_name }}
+        </spam>
+        <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
+             onclick="return toggleuseredit()"/>
+        <a id="logout" href="{% url django.contrib.auth.views.logout_then_login %}" title="logout">
+            Logout
+        </a>
+    </p>
 
-    <form id="user_data" action="{% url demolition.events.views.account_save %}" method="post">
-        <label for="email">Email</label>:
-        <input id="email" name="email" type="text" value="{{ user.email }}"
- 			   onchange="$('#submit_user').show()"/>
-        <label for="phone">Phone</label>:
-        <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
- 			   onchange="$('#submit_user').show()"/>
-        <label for="gender">Gender</label>:
-        <select id="gender" name="gender" onchange="$('#submit_user').show()">
-            <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
-            <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>Female</option>
-        </select>
-        <input id="submit_user" name="submit_user" type="submit" value="save" />
-		<img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
-		<spam class="work_done" id="user_data_done">Saved</spam>
-    </form>
+    <div id="user_forms">
+        <form id="user_data" action="{% url demolition.events.views_post.account_save %}"
+              method="post" onsubmit="return submituser()">
+            <label for="first_name">First Name</label>:
+            <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
+     			   onchange="$('#submit_user').show()"/>
+            <label for="last_name">Last Name</label>:
+            <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
+     			   onchange="$('#submit_user').show()"/>
+            <br>
+            <label for="email">Email</label>:
+            <input id="email" name="email" type="text" value="{{ user.email }}"
+     			   onchange="$('#submit_user').show()"/>
+            <label for="phone">Phone</label>:
+            <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
+     			   onchange="$('#submit_user').show()"/>
+            <label for="gender">Gender</label>:
+            <select id="gender" name="gender" onchange="$('#submit_user').show()">
+                <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
+                <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>Female</option>
+            </select>
+            <input id="submit_user" name="submit_user" type="submit" value="save" class="hidden_submit"/>
+		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
+		    <spam class="work_done" id="user_data_done">Saved</spam>
 
-    <form id="user_password" action="{% url demolition.events.views.password_change %}" method="post">
-        <label for="password">New Password</label>:
-        <input id="password" name="password" type="password" value=""
- 			   onchange="$('#submit_password').show()"/>
-        <label for="password_confirm">Confirm Password</label>:
-        <input id="password_confirm" name="password_confirm" type="password" value=""
- 			   onchange="$('#submit_password').show()"/>
-        <input id="submit_password" name="submit_password" type="submit" value="change password" />   
-		<img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
-		<spam class="work_done" id="password_done">Passsword changed</spam>
+		    <br>
+		    <p class="error" id="user_data_error">
+			    All fields are required.
+			    <img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
+			     	 onclick="$('#user_data_error').slideUp()"/>
+		    </p>
+        </form>
+
+        <form id="user_password" action="{% url demolition.events.views_post.password_change %}"
+              method="post" onsubmit="return submitpassword()">
+            <label for="password">New Password</label>:
+            <input id="password" name="password" type="password" value=""
+     			   onchange="$('#submit_password').show()"/>
+            <label for="password_confirm">Confirm Password</label>:
+            <input id="password_confirm" name="password_confirm" type="password" value=""
+     			   onchange="$('#submit_password').show()"/>
+            <input id="submit_password" name="submit_password" type="submit"
+                   value="change password" class="hidden_submit"/>
+		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
+		    <spam class="work_done" id="password_done">Passsword changed</spam>
 			
-		<br>
-		<p class="error" id="password_error">
-			Password and confirmation must be non empty and equal.
-			<img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
-			 	 onclick="$('#password_error').slideUp()"/>
-		</p>
-		    
-    </form>
+		    <br>
+		    <p class="error" id="password_error">
+			    Password and confirmation must be non empty and equal.
+			    <img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
+			     	 onclick="$('#password_error').slideUp()"/>
+		    </p>
+		        
+        </form>
+    </div>
 </div>
 
 <div id="participations">
     <ul id="events">
         {% for event in events %}
             {% if not event.is_closed %}
-                <li>
-                    <a href="javascript:void(0)"
-                       onclick="$('#participation').load('{% url demolition.events.views.participation_details event.slug %}')"
+                <li id="event_{{ event.slug }}">
+                    <a href="{% url demolition.events.views.participation_details event.slug %}"
+                       {% if event_slug = event.slug %}class="selected"{% endif %}
+                       onclick="$('#events li a').removeClass('selected'); $(this).addClass('selected'); return loadparticipation('{% url demolition.events.views.participation_details event.slug %}')"
                        title="{{ event.title }}">
                         {{ event.title }}
                     </a>
@@ -152,6 +379,9 @@
         {% endfor %}
     </ul>
     <div id="participation">
+        {% if event_slug %}
+            {{ participation_data|safe }}
+        {% endif %}
     </div>
 </div>
 

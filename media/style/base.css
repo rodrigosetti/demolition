@@ -1,0 +1,116 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
+	margin:0;
+	padding:0;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset,img { 
+	border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+	font-style:normal;
+	font-weight:normal;
+}
+ol,ul {
+	list-style:none;
+}
+caption,th {
+	text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+q:before,q:after {
+	content:'';
+}
+abbr,acronym { border:0;
+}
+
+/******************************************************************************/
+
+.error, .loader, .work_done {
+    display: none
+}
+
+#collapse_edit, .remove {
+    cursor: pointer
+}
+
+div#user {
+    margin-bottom: 20px;
+}
+
+#full_name {
+    font-size: 150%;
+    margin-bottom: 10px;
+}
+
+#logout {
+    float: right;
+}
+
+/** Events menu styling **/
+ul#events {
+    list-style-type: none;
+    background-image: url(../image/events_bg.png);
+    background-repeat: repeat-x;
+    height: 80px;
+    margin: auto auto 15px auto;
+}
+
+ul#events li {
+    float: left
+}
+
+ul#events li a {
+    background-image: url(../image/events_bg_divider.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    padding-right: 32px;
+    padding-left: 32px;
+    display: block;
+    line-height: 80px;
+    text-decoration: none;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 21px;
+    color: #371C1C;
+}
+
+ul#events li a:hover {
+    color: #FFF;
+}
+
+ul#events li a.selected {
+    color: #FFF;
+    background-image: url(../image/events_bg_selected.png);
+    background-repeat: repeat-x;
+}
+
+/** Participation layout **/
+
+#dates form {
+    display: inline;
+}
+
+#preferences {
+   margin: 20px 0 20px 0; 
+}
+
+#companions_edit {
+    margin: 20px 0 20px 0;
+}
+
+#companions li form {
+    display: inline;
+}
+
+#companions li {
+    width: 400px;
+}
+
+#companions li img.remove {
+    float: right;
+}

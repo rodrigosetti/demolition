@@ -34,6 +34,10 @@ class PossibleDate(models.Model):
     def __unicode__(self):
         return unicode(self.date)
 
+    class Meta:
+        get_latest_by = 'date'
+        unique_together = ('event', 'date',)
+
 GENDER_CHOICES = (
         (u'M', u'Male'),
         (u'F', u'Female'),
@@ -60,6 +64,7 @@ class Participation(models.Model):
     offer_ride = models.BooleanField(help_text="Person can offer ride to the event's place", default=False)
     
     accepted = models.BooleanField(help_text="Person can join event", default=False)
+    charge = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     paid = models.BooleanField(help_text="The participation is paid", default=False)
     
     def __unicode__(self):
@@ -73,11 +78,21 @@ class ConfirmedDate(models.Model):
     
     def __unicode__(self):
         return unicode(self.date)
+
+    class Meta:
+        get_latest_by = 'date'
+        unique_together = ('participation', 'date',)
     
 # Define a companion a person may bring into an event
-class Companions(models.Model):
+class Companion(models.Model):
     
     participation = models.ForeignKey(Participation)
     
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, default="M")  
     drinking = models.BooleanField(help_text="Companion plans to drink at event", default=True)
+
+    def __unicode__(self):
+        return "%s: %s%s" % (self.participation, self.gender, ", drinking" if self.drinking else "")
+
+    class Meta:
+        db_table = 'events_companions'

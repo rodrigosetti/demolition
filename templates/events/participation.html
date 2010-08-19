@@ -1,13 +1,18 @@
 
 <div id="dates">
-{%if participation.confirmed %}
+{%if event.confirmed %}
 
     {% if participation.paid %}
     <p>Confirmed dates:</p>
     <ul id="confirmed_dates">
         {% for date in possible_dates %}
             {% if date.confirmed %}
-            <li>{{ date }} {%if ok %}OK{% endif %}</li>
+            <li>
+                {{ date }}
+                {%if ok %}
+                <img src="{{ MEDIA_URL }}image/tick.gif" alt="OK" />
+                {% endif %}
+                </li>
             {%endif%}
         {% endfor %}
     </ul>
@@ -16,18 +21,23 @@
 
     <p>Please check dates you confirm to go:</p>
     <form id="confirm_dates" method="post" 
-          action="{%url demolition.events.views.participation_save event.slug %}">
+          action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
+          onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
         <ul id="dates">
-            {% for date in possible_dates %}
+            {% for date, ok in dates %}
                 {% if date.confirmed %}
                 <li>
                     <label for="date_{{ date.id }}">{{ date }}</label>
                     <input id="date_{{ date.id }}" name="date_{{ date.id }}" 
-                           type="checkbox" {%if ok %}checked{% endif %}/>
+                           type="checkbox" {%if ok %}checked{% endif %}
+                           onchange="$('#submit_dates').show()"/>
                 </li>
                 {% endif %}
             {% endfor %}
         </ul>
+        <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
+        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
+        <spam class="work_done" id="dates_done">Saved</spam>
     </form>
     {% endif %}
 
@@ -35,37 +45,63 @@
 
     <p>Please check dates you have avaliability to go:</p>
     <form id="possible_dates" method="post" 
-          action="{%url demolition.events.views.participation_save event.slug %}">
+          action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
+          onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
         <ul id="dates">
             {% for date, ok in dates %}
             <li>
                 <label for="date_{{ date.id }}">{{ date }}</label>
                 <input id="date_{{ date.id }}" name="date_{{ date.id }}"
-                       type="checkbox" {%if ok %}checked{% endif %}/>
+                       type="checkbox" {%if ok %}checked{% endif %}
+                       onchange="$('#submit_dates').show()"/>
             </li>
             {% endfor %}
         </ul>
+        <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
+        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
+        <spam class="work_done" id="dates_done">Saved</spam>
     </form>
 
 {% endif %}
 </div>
 
-<form id="preferences" method="post" action="{%url demolition.events.views.participation_save event.slug %}">
+<form id="preferences" method="post"
+      action="{%url demolition.events.views_post.participation_save_prefs event.slug %}"
+      onsubmit="return participationprefs('{%url demolition.events.views_post.participation_save_prefs event.slug %}')">
 
     <label for="drinking">Drinking</label>:
-    <input id="drinking" name="drinking"type="checkbox" {% if participation.drinking %}checked{% endif %}/>
+    <input id="drinking" name="drinking" type="checkbox"
+           {% if participation.drinking %}checked{% endif %}
+           onchange="$('#submit_prefs').show()"/>
 
     {% if event.needs_ride %}
     <label for="self_transportation">Self transporation</label>:
-    <input id="self_transportation" name="self_transportation"type="checkbox" {% if participation.self_transportation %}checked{% endif %}/>
+    <input id="self_transportation" name="self_transportation" type="checkbox"
+           {% if participation.self_transportation %}checked{% endif %}
+           onchange="$('#submit_prefs').show()"/>
     <label for="offer_ride">Offer Ride</label>:
-    <input id="offer_ride" name="offer_ride"type="checkbox" {% if participation.offer_ride %}checked{% endif %}/>
+    <input id="offer_ride" name="offer_ride" type="checkbox"
+           {% if participation.offer_ride %}checked{% endif %}
+           onchange="$('#submit_prefs').show()"/>
     {% endif %}
 
-    <input id="submit_prefs" name="submit_prefs" type="submit" value="Save"/>
+    <input id="submit_prefs" name="submit_prefs" type="submit" value="save" class="hidden_submit"/>
+    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="prefs_loader"/>
+    <spam class="work_done" id="prefs_done">Saved</spam>
 </form>
 
-<div id="companions">
+<div id="companions_edit">
+    <ul id="companions">
+    {% for companion in companions %}
+        {% include "events/companion_item.html" %}
+    {% endfor %}
+    </ul>
+    <p>
+        <a href="javascript:void(0)" id="add_companion"
+           onclick="return addcompanion('{% url demolition.events.views_post.participation_add_companion event.slug %}')" >
+            add new companion
+        </a>
+    </p>
 </div>
 
 {% if event.confirmed %}
@@ -73,7 +109,7 @@
 {% if participation.paid %}
     <p>Paiment confirmed</p>  
 {% else %}
-    <p>Charge value: ...</p>
+    <p>Charge value: <spam id='#charge'>{{ participation.charge }}</spam></p>
 {% endif %}
 
 {% endif %}

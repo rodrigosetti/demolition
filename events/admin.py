@@ -23,7 +23,7 @@ class ConfirmedDateInline(admin.TabularInline):
     model = ConfirmedDate
     
 class CompanionsInline(admin.TabularInline):
-    model = Companions
+    model = Companion
 
 class ParticipationAdmin(admin.ModelAdmin):
     list_display = ("event", "person", "accepted", "paid")

@@ -15,16 +15,20 @@ urlpatterns = patterns('',
     #### post ####
 
     # saves user data
-    (r'^accounts/save/$', 'demolition.events.views.account_save'),
+    (r'^accounts/save/$', 'demolition.events.views_post.account_save'),
 
     # changes password
-    (r'^accounts/password/$', 'demolition.events.views.password_change'),
+    (r'^accounts/password/$', 'demolition.events.views_post.password_change'),
 
     # invitation to event: create a partitipation
-    (r'^event/(?P<event_slug>.*)/invite/$', 'demolition.events.views.invitation'),
+    (r'^event/(?P<event_slug>.*)/invite/$', 'demolition.events.views_post.invitation'),
 
     # saves participation data: dates, prefs, companions(add, remove edit)
-    (r'^event/(?P<event_slug>.*)/save/$', 'demolition.events.views.participation_save'),
+    (r'^event/(?P<event_slug>.*)/dates$', 'demolition.events.views_post.participation_save_dates'),
+    (r'^event/(?P<event_slug>.*)/prefs$', 'demolition.events.views_post.participation_save_prefs'),
+    (r'^event/(?P<event_slug>.*)/companion/add$', 'demolition.events.views_post.participation_add_companion'),
+    (r'^event/(?P<event_slug>.*)/companion/del$', 'demolition.events.views_post.participation_del_companion'),
+    (r'^event/(?P<event_slug>.*)/companion/save$', 'demolition.events.views_post.participation_save_companion'),
 
     #### get ####
     

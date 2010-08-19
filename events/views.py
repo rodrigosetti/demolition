@@ -157,7 +157,8 @@ def participation_details(request, event_slug):
             except ObjectDoesNotExist:
                 # render a self invite page
                 return render_to_response("events/participation_invite.html",
-                                          {"event": event})
+                                          {"event": event},
+                                          context_instance=RequestContext(request))
 
             # check if the user was accepted into the participation
             if participation.accepted:
@@ -167,7 +168,8 @@ def participation_details(request, event_slug):
                 return render_to_response("events/participation.html", 
                                           {"participation": participation,
                                            "event": event,
-                                           "dates": dates})
+                                           "dates": dates},
+                                           context_instance=RequestContext(request))
             else:
                 # render a page waiting for acceptance
                 return render_to_response("events/participation_waiting.html",

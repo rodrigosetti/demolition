@@ -2,7 +2,14 @@
 
 <p>In order to participate in this event you must get and invitation</p>
 
-<button 
-    onclick="$.post('{% url demolition.events.views.invitation event.slug %}', function(data) { $(this).replaceWith('<p>Invitation sent</p>'); });" >
+<button id="submit_invitation_req"
+    onclick="request_invitation('{% url demolition.events.views.invitation event.slug %}');" >
 Request an invitation now
 </button>
+
+<img style="display:none" src="{{ MEDIA_URL }}image/loader.gif" alt="" 
+	 class="loader" id="invitation_loader"/>
+
+<spam style="display:none" class="work_done" id="invitation_done">
+	Invitation requested, please wait for approval
+</spam>

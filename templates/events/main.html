@@ -4,20 +4,92 @@
     {{ block.super }}
     
     <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery-1.4.2.min.js"></script> 
-    <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery.form.js"></script> 
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
  
-    <script type="text/javascript"> 
-        // wait for the DOM to be loaded 
-        $(document).ready(function() { 
+    <script type="text/javascript">
+		$(function() {
 
-            // bind forms to ajax
-            $('#user_data').ajaxForm(); 
-            $('#user_password').ajaxForm(); 
-        }); 
-    </script> 
+		    $('.error, .loader, .work_done').hide();
+		
+		    $("#submit_user").click(function() {
+
+				$('#submit_user').hide();
+				$('#user_data_loader').show();
+				$('#user_data_done').hide();
+
+		        var dataString = 'email='+ $('input#email').val() + 
+								 '&phone=' + $('input#phone').val() + 
+								 '&gender=' + $('select#gender').val();
+
+		        $.ajax({
+		          type: "POST",
+		          url: "{% url demolition.events.views.account_save %}",
+		          data: dataString,
+		          success: function() {
+		          	$('#user_data_loader').hide();
+					$('#user_data_done').show();
+					$('#user_data_done').fadeOut(4000);
+		          }
+		        });
+		        return false;
+		    });
+		
+		    $("#submit_password").click(function() {
+
+				// validate
+				$('#password_error').hide();
+				
+				passwd = $('input#password').val();
+				passwdc = $('input#password_confirm').val();
+				
+				if (passwd == '' || passwd != passwdc) {
+					$('#password_error').slideDown();
+					return false;
+				}
+				
+				// send data
+				$('#submit_password').hide();
+				$('#password_change_loader').show();
+				$('#password_done').hide();
+
+		        var dataString = 'password='+ passwd + 
+								 '&password_confirm=' + passwdc;
+
+		        $.ajax({
+		          type: "POST",
+		          url: "{% url demolition.events.views.password_change %}",
+		          data: dataString,
+		          success: function() {
+		            $('#password_change_loader').hide();
+					$('#password_done').show();
+					$('#password_done').fadeOut(4000);
+		          }
+		        });
+		
+				// clear
+				$('input#password').val('');
+				$('input#password_confirm').val('');
+		
+		        return false;
+		    });
+		});
+		
+		function request_invitation(post_url) {
+			// send data
+			$('#invitation_loader').show();
+			$('#submit_invitation_req').hide();
+			
+			 $.ajax({
+		          type: "POST",
+		          url: post_url,
+		          success: function() {
+		            $('#invitation_loader').hide();
+					$('#invitation_done').fadeIn();
+		          }
+		        });
+		};
+		
+    </script>
+
 {% endblock %}
 
 {% block content %}
@@ -29,23 +101,39 @@
 
     <form id="user_data" action="{% url demolition.events.views.account_save %}" method="post">
         <label for="email">Email</label>:
-        <input id="email" name="email" type="text" value="{{ user.email }}" />
+        <input id="email" name="email" type="text" value="{{ user.email }}"
+ 			   onchange="$('#submit_user').show()"/>
         <label for="phone">Phone</label>:
-        <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}" />
+        <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
+ 			   onchange="$('#submit_user').show()"/>
         <label for="gender">Gender</label>:
-        <select id="gender" name="gender">
+        <select id="gender" name="gender" onchange="$('#submit_user').show()">
             <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
             <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>Female</option>
         </select>
         <input id="submit_user" name="submit_user" type="submit" value="save" />
+		<img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
+		<spam class="work_done" id="user_data_done">Saved</spam>
     </form>
 
     <form id="user_password" action="{% url demolition.events.views.password_change %}" method="post">
         <label for="password">New Password</label>:
-        <input id="password" name="password" type="password" value="" />
+        <input id="password" name="password" type="password" value=""
+ 			   onchange="$('#submit_password').show()"/>
         <label for="password_confirm">Confirm Password</label>:
-        <input id="password_confirm" name="password_confirm" type="password" value=""/>
-        <input id="submit_password" name="submit_password" type="submit" value="change password" />        
+        <input id="password_confirm" name="password_confirm" type="password" value=""
+ 			   onchange="$('#submit_password').show()"/>
+        <input id="submit_password" name="submit_password" type="submit" value="change password" />   
+		<img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
+		<spam class="work_done" id="password_done">Passsword changed</spam>
+			
+		<br>
+		<p class="error" id="password_error">
+			Password and confirmation must be non empty and equal.
+			<img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
+			 	 onclick="$('#password_error').slideUp()"/>
+		</p>
+		    
     </form>
 </div>
 

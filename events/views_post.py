@@ -43,50 +43,53 @@ def update_charge(participation):
     Calculate an unique charge(if granularity applies) and assign it
     to participation
     """
-    event = participation.event
-    person = participation.person
+    # check if participation is not paid yet
+    if not participation.paid:
 
-    # calculate value for person only
-    if person.gender == "M":
-        value = event.men_base_day
-        if participation.drinking: value += event.drink_men_day_add
-    elif person.gender == "F":
-        value = event.woman_base_day
-        if participation.drinking: value += event.drink_woman_day_add
-   
-    # add for each companion
-    for companion in Companion.objects.filter(participation=participation):
-        if companion.gender == "M":
-            value += event.men_base_day
-            if companion.drinking: value += event.drink_men_day_add
-        elif companion.gender == "F":
-            value += event.woman_base_day
-            if companion.drinking: value += event.drink_woman_day_add
+        event = participation.event
+        person = participation.person
 
-    # multiply by the number of confirmed dates
-    days = ConfirmedDate.objects.filter(participation=participation).count()
-    value *= days
-   
-    # now check if there is granularity
-    if event.billing_granularity > 0:
-        # the value must be unique between all participants
-        # take all restant participations of this event
-        rest_participations = Participation.objects.filter(event=event, 
-                                                          accepted=True).exclude(id=participation.id)
+        # calculate value for person only
+        if person.gender == "M":
+            value = event.men_base_day
+            if participation.drinking: value += event.drink_men_day_add
+        elif person.gender == "F":
+            value = event.woman_base_day
+            if participation.drinking: value += event.drink_woman_day_add
        
-        # while there are identical charges
-        addup = 0
-        flip = 1
-        while rest_participations.filter(charge = value + (flip * addup)).exists():
-            addup += event.billing_granularity
-            flip *= -1
+        # add for each companion
+        for companion in Companion.objects.filter(participation=participation):
+            if companion.gender == "M":
+                value += event.men_base_day
+                if companion.drinking: value += event.drink_men_day_add
+            elif companion.gender == "F":
+                value += event.woman_base_day
+                if companion.drinking: value += event.drink_woman_day_add
 
-        # use the unique charge
-        value += flip * addup
-    
-    # save charge value 
-    participation.charge = value
-    participation.save()
+        # multiply by the number of confirmed dates
+        days = ConfirmedDate.objects.filter(participation=participation).count()
+        value *= days
+       
+        # now check if there is granularity
+        if event.billing_granularity > 0:
+            # the value must be unique between all participants
+            # take all restant participations of this event
+            rest_participations = Participation.objects.filter(event=event, 
+                                                              accepted=True).exclude(id=participation.id)
+           
+            # while there are identical charges
+            addup = 0
+            flip = 1
+            while rest_participations.filter(charge = value + (flip * addup)).exists():
+                if flip < 0: addup += event.billing_granularity
+                flip *= -1
+
+            # use the unique charge
+            value += flip * addup
+        
+        # save charge value 
+        participation.charge = value
+        participation.save()
 
 
 @ajax_post_login
@@ -182,7 +185,7 @@ def participation_save_dates(request, event_slug):
     if participation.event.confirmed: update_charge(participation)
 
     # return a response with the calculated charge value
-    return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+    return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge}),
                         mimetype="text/javascript")
 
 
@@ -210,7 +213,7 @@ def participation_save_prefs(request, event_slug):
     if participation.event.confirmed: update_charge(participation)
 
     # return a response with the calculated charge value
-    return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+    return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge}),
                         mimetype="text/javascript")
 
 @ajax_post_login
@@ -236,7 +239,7 @@ def participation_add_companion(request, event_slug):
                                context_instance=RequestContext(request)).content
 
     # return a response with the calculated charge value
-    return HttpResponse(json.dumps({'charge': float(participation.charge), 
+    return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge, 
                                     'html': htmldata}),
                         mimetype="text/javascript")
                                        
@@ -265,7 +268,7 @@ def participation_del_companion(request, event_slug):
         if participation.event.confirmed: update_charge(participation)
 
         # return a response with the calculated charge value
-        return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+        return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge}),
                             mimetype="text/javascript")
     else:
         return HttpResponseBadRequest()
@@ -299,7 +302,7 @@ def participation_save_companion(request, event_slug):
         if participation.event.confirmed: update_charge(participation)
 
         # return a response with the calculated charge value
-        return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+        return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge}),
                             mimetype="text/javascript")
     else:
         return HttpResponseBadRequest()

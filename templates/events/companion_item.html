@@ -15,15 +15,19 @@
         </select>
 
         <input type="submit" id="submit_companion_{{ companion.id }}" value="save" class="hidden_submit"/>
-        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="companion_loader_{{ companion.id }}"/>
-        <spam class="work_done" id="companion_done_{{ companion.id }}">Saved</spam>
     </form>
 
     <form class="remove" method="post"
           action="{% url demolition.events.views_post.participation_del_companion companion.participation.event.slug %}"
           onsubmit="return deletecompanion('{% url demolition.events.views_post.participation_del_companion companion.participation.event.slug %}', {{ companion.id }})">
         <input type="hidden" name="id" value="{{ companion.id }}" />
-        <input type="submit" name="remove_companion" value="remove" />
+        <input type="image" src="{{ MEDIA_URL}}image/remove.png" 
+               name="remove_companion" alt="remove" 
+               onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+               onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
     </form>
+
+    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="companion_loader_{{ companion.id }}"/>
+    <spam class="work_done" id="companion_done_{{ companion.id }}">saved</spam>
 </li>
 {% endspaceless %}

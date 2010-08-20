@@ -4,6 +4,7 @@ from events.models import Event, Participation, PossibleDate, ConfirmedDate, Com
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect
 from django.template import RequestContext
+from views_post import update_charge
 
 @login_required
 def main(request, event_slug=None):
@@ -68,6 +69,11 @@ def participation_details(request, event_slug, is_ajax=False):
 
             # check if the user was accepted into the participation
             if participation.accepted:
+
+                # update charges case event is confirmed
+                if event.confirmed: update_charge(participation)
+
+                # load dates
                 dates = [ (date, ConfirmedDate.objects.filter(participation=participation, date=date).exists()) for
                            date in PossibleDate.objects.filter(event=event) ]
                

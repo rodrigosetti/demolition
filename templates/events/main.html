@@ -3,14 +3,15 @@
 {% spaceless %}
 {% block head %}
     {{ block.super }}
-    
+ 
+    <link href="{{ MEDIA_URL }}style/base.css" rel="stylesheet" type="text/css">   
     <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery-1.4.2.min.js"></script> 
  
     <script type="text/javascript">
 
         $(document).ready(function() {
             $('.hidden_submit').hide();
-            $('#user_forms').hide();
+            $('#user_forms, #event_info').hide();
         });
 
         {% comment %}
@@ -109,10 +110,13 @@
             save participation preferences
         {% endcomment %}
         function participationprefs(post_url) {
-			// send data
+
+            // show loader and hide submit(ajax form)
 			$('#prefs_loader').show();
 			$('#submit_prefs').hide();
-	
+            $('#charge').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
+
+            // build data	
             data = {};
             if ($('#drinking').is(':checked'))
                 data['drinking'] = 'on';
@@ -121,6 +125,7 @@
             if ($('#offer_ride').is(':checked'))
                 data['offer_ride'] = 'on';
 
+			// send data
 			$.ajax({
                     type: "POST",
                     url: post_url,
@@ -130,6 +135,8 @@
                         $('#prefs_loader').hide();
                         $('#prefs_done').show();
                         $('#prefs_done').fadeOut(4000);
+
+                        // update charge
 						$('#charge').html(data["charge"]);
                     }
                 });
@@ -151,6 +158,7 @@
 			// show and hide dynamic form
 			$('#dates_loader').show();
 			$('#submit_dates').hide();
+            $('#charge').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
 
             // send data
 			$.ajax({
@@ -162,6 +170,8 @@
                         $('#dates_loader').hide();
                         $('#dates_done').show();
                         $('#dates_done').fadeOut(4000);
+
+                        // update charge
 						$('#charge').html(data["charge"]);
                     }
                 });
@@ -206,7 +216,7 @@
                 '<img src="{{ MEDIA_URL }}image/loader.gif" class="loader" id="participation_loading" alt="">'
             );
             $('#participation').load(post_url, function() {
-                $('#participation .hidden_submit').hide();
+                $('#participation .hidden_submit, #event_info').hide();
             });
 
             return false;
@@ -230,10 +240,32 @@
             editing_user = !editing_user;
         };
 
+       {% comment %}
+            Simple toggler to show and hide event info
+        {% endcomment %}
+        var show_event_info = false;
+        function toggleeventinfo() {
+
+            if (show_event_info) {
+                $('#event_info').slideUp();
+                $('#collapse_event_info').attr('src', '{{ MEDIA_URL }}image/plus.gif');
+            }
+            else {
+                $('#event_info').slideDown();
+                $('#collapse_event_info').attr('src', '{{ MEDIA_URL }}image/minus.gif');
+            }
+
+            show_event_info = !show_event_info;
+        };
+
         {% comment %}
             Adds a new li item with a conpanion form into ul#companions list
         {% endcomment %}
         function addcompanion(post_url) {
+
+            // show loader
+            $('#addcompanion_loader').show();
+            $('#charge').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
 
             // make call to url in order to obtain html
             $.post(post_url, {}, function(data) {
@@ -242,7 +274,12 @@
                 $('ul#companions li:last-child').hide();
                 $('ul#companions li:last-child').slideDown();
                 $('ul#companions li:last-child .hidden_submit').hide();
+
+                // update charge
 				$('#charge').html(data["charge"]);
+    
+                // hide loader
+                $('#addcompanion_loader').hide();
 	          }, "json");
 
             return false;
@@ -253,6 +290,11 @@
         {% endcomment %}
         function deletecompanion(post_url, id) {
 
+            // show loader
+            $('#addcompanion_loader').show();
+            $('#charge').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
+
+            // send request
 		    $.ajax({
 	          type: "POST",
               data: {"id": id},
@@ -263,7 +305,12 @@
                 $('#companion_' + id).slideUp('slow', function() {
                     // remove element
                     $('#companion_' + id).remove();
+
+                    // update charge
 					$('#charge').html(data["charge"]);
+
+                    // hide loader
+                    $('#addcompanion_loader').hide();
                 });
 	          }
 	        });
@@ -286,12 +333,15 @@
             // show and hide dynamic form
 			$('#companion_loader_' + id).show();
 			$('#submit_companion_' + id).hide();
+            $('#charge').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
 			
             // send data
 			$.post(post_url, data, function(data) {
 		            $('#companion_loader_' + id).hide();
                     $('#companion_done_' + id).show()
 					$('#companion_done_' + id).fadeOut(4000);
+
+                    // update charge
 					$('#charge').html(data["charge"]);
 		          }, 'json');
 
@@ -303,11 +353,15 @@
 
 {% block content %}
 
+<div id="content_a">
+<div id="content_b">
+
 <div id="user">
     <p id="user_head">
         <spam id="full_name">
             {{ user.first_name }} {{ user.last_name }}
         </spam>
+        <spam> </spam>
         <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
              onclick="return toggleuseredit()"/>
         <a id="logout" href="{% url django.contrib.auth.views.logout_then_login %}" 
@@ -321,17 +375,17 @@
               method="post" onsubmit="return submituser()">
             <label for="first_name">First Name</label>:
             <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
-     			   onchange="$('#submit_user').show()"/>
+     			   onchange="$('#submit_user').show()" size="15"/>
             <label for="last_name">Last Name</label>:
             <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
-     			   onchange="$('#submit_user').show()"/>
+     			   onchange="$('#submit_user').show()" size="15"/>
             <br>
             <label for="email">Email</label>:
             <input id="email" name="email" type="text" value="{{ user.email }}"
      			   onchange="$('#submit_user').show()"/>
             <label for="phone">Phone</label>:
             <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
-     			   onchange="$('#submit_user').show()"/>
+     			   onchange="$('#submit_user').show()" size="15"/>
             <label for="gender">Gender</label>:
             <select id="gender" name="gender" onchange="$('#submit_user').show()">
                 <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
@@ -339,34 +393,38 @@
             </select>
             <input id="submit_user" name="submit_user" type="submit" value="save" class="hidden_submit"/>
 		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
-		    <spam class="work_done" id="user_data_done">Saved</spam>
+		    <spam class="work_done" id="user_data_done">saved</spam>
 
 		    <br>
 		    <p class="error" id="user_data_error">
 			    All fields are required.
-			    <img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
-			     	 onclick="$('#user_data_error').slideUp()"/>
+			    <img src="{{ MEDIA_URL }}image/remove.png" alt="close" class="close"
+			     	 onclick="$('#user_data_error').slideUp()"
+                     onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                     onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
 		    </p>
         </form>
 
         <form id="user_password" action="{% url demolition.events.views_post.password_change %}"
               method="post" onsubmit="return submitpassword()">
             <label for="password">New Password</label>:
-            <input id="password" name="password" type="password" value=""
+            <input id="password" name="password" type="password" value="" size="12"
      			   onchange="$('#submit_password').show()"/>
-            <label for="password_confirm">Confirm Password</label>:
+            <label for="password_confirm">Confirm</label>:
             <input id="password_confirm" name="password_confirm" type="password" value=""
-     			   onchange="$('#submit_password').show()"/>
+     			   onchange="$('#submit_password').show()" size="12"/>
             <input id="submit_password" name="submit_password" type="submit"
                    value="change password" class="hidden_submit"/>
 		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
-		    <spam class="work_done" id="password_done">Passsword changed</spam>
+		    <spam class="work_done" id="password_done">passsword changed</spam>
 			
 		    <br>
 		    <p class="error" id="password_error">
 			    Password and confirmation must be non empty and equal.
-			    <img src="{{ MEDIA_URL }}image/close.png" alt="close" class="close"
-			     	 onclick="$('#password_error').slideUp()"/>
+			    <img src="{{ MEDIA_URL }}image/remove.png" alt="close" class="close"
+			     	 onclick="$('#password_error').slideUp()"
+                     onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                     onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
 		    </p>
 		        
         </form>
@@ -393,6 +451,9 @@
             {{ participation_data|safe }}
         {% endif %}
     </div>
+</div>
+
+</div>
 </div>
 
 {% endblock %}

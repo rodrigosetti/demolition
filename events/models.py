@@ -64,7 +64,7 @@ class Participation(models.Model):
     offer_ride = models.BooleanField(help_text="Person can offer ride to the event's place", default=False)
     
     accepted = models.BooleanField(help_text="Person can join event", default=False)
-    charge = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    charge = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0)
     paid = models.BooleanField(help_text="The participation is paid", default=False)
     
     def __unicode__(self):

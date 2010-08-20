@@ -32,13 +32,26 @@ abbr,acronym { border:0;
 /******************************************************************************/
 
 html {
-   background-color: gray;
+    background-color: #dadada;
+    font-family: Georgia, serif;
+    color: #3a3a3a;
+    text-align: center;
 }
 
 body {
-   margin: 0 100px 0 100px;
-   padding: 80px 0 300px 0;
-   background-color: white;
+    width: 800px;
+    margin:0px auto;
+    text-align: left;
+}
+
+#content_b {
+    background: url(../image/border-left.png) top left repeat-y #c6d9ea;
+    padding: 80px 0 300px 27px;
+    margin-right: 27px;
+}
+
+#content_a {
+    background: url(../image/border-right.png) top right repeat-y #c6d9ea;
 }
 
 input {
@@ -49,7 +62,33 @@ input {
     display: none
 }
 
-#collapse_edit, .remove {
+input[type=text], input[type=password] {
+    border: 1px solid #006;
+    background: #ffc;
+}
+
+input[type=text]:hover, input[type=password]:hover {
+    border: 1px solid #f00;
+    background: #ff6;
+}
+
+input[type=submit], .button  {
+    background: url(../image/button-bg.png) repeat-x top center;
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 0 3px 0 3px;
+}
+
+input[type=submit]:hover, .button:hover {
+    background: white;
+}
+
+#collapse_edit {
     cursor: pointer
 }
 
@@ -62,15 +101,15 @@ div#user {
     margin-top: 20px;
 }
 
-.button {
-    text-decoration: none;
-    background-color: #555;
-    color: white;
-    padding: 4px;
+input[type=image] {
+    vertical-align: middle;
 }
 
-.button:hover {
-    background-color: #777;
+.work_done {
+    background-color: #ff6;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 2px;
 }
 
 .warning {
@@ -79,8 +118,20 @@ div#user {
 }
 
 .error {
+    margin: 10px;
+    color: black;
     font-size: 80%;
-    color: red;
+    background-color: #f66;
+    vertical-align: middle;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding-left: 10px;
+    height: 24px;
+}
+
+.close {
+    cursor: pointer;
+    float: right;
 }
 
 #full_name {
@@ -92,13 +143,26 @@ div#user {
     float: right;
 }
 
+/** Login page **/
+
+#login {
+    text-align: center;
+}
+
+#login form {
+    margin: 20px 0 0 30%;
+    text-align: left;
+}
+
 /** Events menu styling **/
 ul#events {
     list-style-type: none;
-    background-image: url(../image/events_bg.png);
-    background-repeat: repeat-x;
-    height: 80px;
+    background: url(../image/button-bg.png) repeat-x top center;
+    height: 50px;
     margin: auto auto 15px auto;
+    overflow: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 ul#events li {
@@ -106,33 +170,42 @@ ul#events li {
 }
 
 ul#events li a {
-    background-image: url(../image/events_bg_divider.png);
-    background-repeat: no-repeat;
-    background-position: right;
-    padding-right: 32px;
-    padding-left: 32px;
+    border-right: 1px solid #999;
+    padding-right: 12px;
+    padding-left: 12px;
     display: block;
-    line-height: 80px;
+    line-height: 50px;
     text-decoration: none;
     font-family: Georgia, "Times New Roman", Times, serif;
-    font-size: 21px;
+    font-size: 20px;
     color: #371C1C;
 }
 
 ul#events li a:hover {
-    color: #FFF;
+    background-color: white;
 }
 
 ul#events li a.selected {
     color: #FFF;
-    background-image: url(../image/events_bg_selected.png);
-    background-repeat: repeat-x;
+    background-color: #AAA;
 }
 
 /** Participation layout **/
 
 #participation {
    padding: 0 20px 0 20px;
+}
+
+#event_info {
+    background-color: #b5cbe2;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 5px;
+}
+
+#dates_info {
+    background-color: #b5cbe2;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 5px;
 }
 
 #dates {
@@ -144,11 +217,14 @@ ul#events li a.selected {
 }
 
 #preferences {
-   margin: 20px 0 20px 0; 
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 5px;
 }
 
 #companions_edit {
-    margin: 20px 0 20px 0;
+    background-color: #b5cbe2;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 5px;
 }
 
 #companions {
@@ -165,6 +241,31 @@ ul#events li a.selected {
 
 #companions li img.remove {
     float: right;
+}
+
+#confirmed {
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 5px;
+}
+
+/** Request invitation page layout **/
+
+#invitation_request {
+    padding-top: 50px;
+    font-size: 120%;
+    text-align: center;
+}
+
+p#invitation_info {
+    margin-bottom: 40px
+}
+
+/** Waiting aproval layout **/
+
+#waiting_invitation {
+    padding-top: 50px;
+    text-align: center;
+    font-size: 120%;
 }
 
 /** Charge layout **/

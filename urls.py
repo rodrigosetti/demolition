@@ -38,9 +38,6 @@ urlpatterns = patterns('',
     # gets a participation page
     (r'^event/(?P<event_slug>.*)/$', 'demolition.events.views.participation_details'),
 
-    # gets a event info page
-    (r'^event/(?P<event_slug>.*)/info$', 'demolition.events.views.event_info'),
-
     #### admin page ####
     (r'^admin/', include(admin.site.urls)),
 )

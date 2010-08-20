@@ -1,24 +1,31 @@
 {% load humanize %}
+{% comment %}
+{% load markup %}
+{% endcomment %}
 
 {% spaceless %}
 
 {% if event.info %}
-	<a href="{% url demolition.events.views.event_info event.slug %}" title="Event information"
-	   target="_blank">
-		Event information
-	</a>
+    <p>
+    	Event Information
+        <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_event_info"
+                 onclick="return toggleeventinfo()"/>
+    </p>
+    <div id="event_info">
+        {{ event.info }}
+    </div>
 {% endif %}
 
-<div id="dates">
+<div id="dates_info">
 {%if event.confirmed %}
 
     {% if participation.paid %}
     <p>Confirmed dates:</p>
     <ul id="confirmed_dates">
-        {% for date in possible_dates %}
-            {% if date.confirmed %}
+        {% for day in possible_dates %}
+            {% if day.confirmed %}
             <li>
-                {{ date|naturalday }}
+                {{ day.date|naturalday }}
                 {%if ok %}
                 <img src="{{ MEDIA_URL }}image/tick.gif" alt="OK" />
                 {% endif %}
@@ -34,11 +41,11 @@
           action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
           onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
         <ul id="dates">
-            {% for date, ok in dates %}
-                {% if date.confirmed %}
+            {% for day, ok in dates %}
+                {% if day.confirmed %}
                 <li>
-                    <label for="date_{{ date.id }}">{{ date|naturalday }}</label>
-                    <input id="date_{{ date.id }}" name="date_{{ date.id }}" 
+                    <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
+                    <input id="date_{{ day.id }}" name="date_{{ day.id }}" 
                            type="checkbox" {%if ok %}checked{% endif %}
                            onchange="$('#submit_dates').show()"/>
                 </li>
@@ -47,7 +54,7 @@
         </ul>
         <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
         <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
-        <spam class="work_done" id="dates_done">Saved</spam>
+        <spam class="work_done" id="dates_done">saved</spam>
     </form>
     {% endif %}
 
@@ -58,10 +65,10 @@
           action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
           onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
         <ul id="dates">
-            {% for date, ok in dates %}
+            {% for day, ok in dates %}
             <li>
-                <label for="date_{{ date.id }}">{{ date|naturalday }}</label>
-                <input id="date_{{ date.id }}" name="date_{{ date.id }}"
+                <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
+                <input id="date_{{ day.id }}" name="date_{{ date.id }}"
                        type="checkbox" {%if ok %}checked{% endif %}
                        onchange="$('#submit_dates').show()"/>
             </li>
@@ -69,7 +76,7 @@
         </ul>
         <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
         <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
-        <spam class="work_done" id="dates_done">Saved</spam>
+        <spam class="work_done" id="dates_done">saved</spam>
     </form>
 
 {% endif %}
@@ -85,7 +92,7 @@
            onchange="$('#submit_prefs').show()"/>
 
     {% if event.needs_ride %}
-    <label for="self_transportation">Self transporation</label>:
+    <label for="self_transportation">Self transportation</label>:
     <input id="self_transportation" name="self_transportation" type="checkbox"
            {% if participation.self_transportation %}checked{% endif %}
            onchange="$('#submit_prefs').show()"/>
@@ -97,7 +104,7 @@
 
     <input id="submit_prefs" name="submit_prefs" type="submit" value="save" class="hidden_submit"/>
     <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="prefs_loader"/>
-    <spam class="work_done" id="prefs_done">Saved</spam>
+    <spam class="work_done" id="prefs_done">saved</spam>
 </form>
 
 <div id="companions_edit">
@@ -110,17 +117,20 @@
     {% endfor %}
     </ul>
     <p>
-        <a href="javascript:void(0)" id="add_companion" class="button"
+        <a href="{% url demolition.events.views_post.participation_add_companion event.slug %}"
+           id="add_companion" class="button"
            onclick="return addcompanion('{% url demolition.events.views_post.participation_add_companion event.slug %}')" >
             add new companion
         </a>
+        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="addcompanion_loader"/>
     </p>
 </div>
 
 {% if event.confirmed %}
 
+<div id="confirmed">
 {% if participation.paid %}
-    <p id="charge_info">Paiment confirmed: $<spam id='charge'>{{ participation.charge|default_if_none:"-" }}</spam></p>  
+    <p id="charge_info">Paiment confirmed: $<spam id='charge'>{{ participation.charge|floatformat:2 }}</spam></p>  
 {% else %}
 	{% if event.billing_granularity > 0 %}
 	<p id="billing_warning" class="warning">
@@ -128,8 +138,10 @@
 		your unique payment.
 	</p>
 	{% endif %}
-    <p id="charge_info">Charge value: $<spam id='charge'>{{ participation.charge|default_if_none:"-" }}</spam></p>
+    <p id="charge_info">Charge value: $<spam id='charge'>{{ participation.charge|floatformat:2 }}</spam></p>
 {% endif %}
+</div>
+
 {% endif %}
 
 {% endspaceless %}

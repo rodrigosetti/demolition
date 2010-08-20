@@ -1,5 +1,4 @@
-<h2 class="event_title">{{ event.title }}</h2>
-
+{% spaceless %}
 <p>In order to participate in this event you must get and invitation</p>
 
 <button id="submit_invitation_req"
@@ -13,3 +12,4 @@ Request an invitation now
 <spam style="display:none" class="work_done" id="invitation_done">
 	Invitation requested, please wait for approval
 </spam>
+{% endspaceless %}

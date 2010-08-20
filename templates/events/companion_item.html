@@ -1,3 +1,4 @@
+{% spaceless %}
 <li id="companion_{{ companion.id }}">
     <form id="companion_form_{{ companion.id }}" method="post" 
           action="{% url demolition.events.views_post.participation_save_companion companion.participation.event.slug %}"
@@ -25,3 +26,4 @@
         <input type="submit" name="remove_companion" value="remove" />
     </form>
 </li>
+{% endspaceless %}

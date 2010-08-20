@@ -12,16 +12,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
-
+import json
 
 def ajax_post_login(view_func):
     """"
     Decorator check if request is POST, user is logged in and redirect if not Ajax.
     """
     def _decorated(request, *args, **kwargs): 
-        if request.method != "POST":
-            return HttpResponseBadRequest()  
-        elif request.user and request.user.is_authenticated() and request.user.is_active:
+#        if request.method != "POST":
+#            return HttpResponseBadRequest()  
+        if request.user and request.user.is_authenticated() and request.user.is_active:
 
             response = view_func(request, *args, **kwargs)
 
@@ -36,6 +36,58 @@ def ajax_post_login(view_func):
             return HttpResponseForbidden()
 
     return _decorated
+
+
+def update_charge(participation):
+    """
+    Calculate an unique charge(if granularity applies) and assign it
+    to participation
+    """
+    event = participation.event
+    person = participation.person
+
+    # calculate value for person only
+    if person.gender == "M":
+        value = event.men_base_day
+        if participation.drinking: value += event.drink_men_day_add
+    elif person.gender == "F":
+        value = event.woman_base_day
+        if participation.drinking: value += event.drink_woman_day_add
+   
+    # add for each companion
+    for companion in Companion.objects.filter(participation=participation):
+        if companion.gender == "M":
+            value += event.men_base_day
+            if companion.drinking: value += event.drink_men_day_add
+        elif companion.gender == "F":
+            value += event.woman_base_day
+            if companion.drinking: value += event.drink_woman_day_add
+
+    # multiply by the number of confirmed dates
+    days = ConfirmedDate.objects.filter(participation=participation).count()
+    value *= days
+   
+    # now check if there is granularity
+    if event.billing_granularity > 0:
+        # the value must be unique between all participants
+        # take all restant participations of this event
+        rest_participations = Participation.objects.filter(event=event, 
+                                                          accepted=True).exclude(id=participation.id)
+       
+        # while there are identical charges
+        addup = 0
+        flip = 1
+        while rest_participations.filter(charge = value + (flip * addup)).exists():
+            addup += event.billing_granularity
+            flip *= -1
+
+        # use the unique charge
+        value += flip * addup
+    
+    # save charge value 
+    participation.charge = value
+    participation.save()
+
 
 @ajax_post_login
 def account_save(request):
@@ -126,8 +178,12 @@ def participation_save_dates(request, event_slug):
             except ObjectDoesNotExist:
                 pass
 
-    # return an empty response
-    return HttpResponse()
+    # update charge if event is confirmed
+    if participation.event.confirmed: update_charge(participation)
+
+    # return a response with the calculated charge value
+    return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+                        mimetype="text/javascript")
 
 
 @ajax_post_login
@@ -149,9 +205,13 @@ def participation_save_prefs(request, event_slug):
 
     # saves model object
     participation.save()
+    
+    # update charge if event is confirmed
+    if participation.event.confirmed: update_charge(participation)
 
-    # return an empty response
-    return HttpResponse()
+    # return a response with the calculated charge value
+    return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+                        mimetype="text/javascript")
 
 @ajax_post_login
 def participation_add_companion(request, event_slug):
@@ -166,11 +226,20 @@ def participation_add_companion(request, event_slug):
     # create a new companion object
     companion = Companion(participation = participation)
     companion.save()
+    
+    # update charge if event is confirmed
+    if participation.event.confirmed: update_charge(participation)
 
     # return companion data(if ajax)
-    return render_to_response('events/companion_item.html',
+    htmldata = render_to_response('events/companion_item.html',
                               {'companion': companion },
-                               context_instance=RequestContext(request))
+                               context_instance=RequestContext(request)).content
+
+    # return a response with the calculated charge value
+    return HttpResponse(json.dumps({'charge': float(participation.charge), 
+                                    'html': htmldata}),
+                        mimetype="text/javascript")
+                                       
 
 @ajax_post_login
 def participation_del_companion(request, event_slug):
@@ -191,9 +260,13 @@ def participation_del_companion(request, event_slug):
             return HttpResponseNotFound()
 
         companion.delete()
+        
+        # update charge if event is confirmed
+        if participation.event.confirmed: update_charge(participation)
 
-        # return an empty response
-        return HttpResponse()
+        # return a response with the calculated charge value
+        return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+                            mimetype="text/javascript")
     else:
         return HttpResponseBadRequest()
 
@@ -221,8 +294,12 @@ def participation_save_companion(request, event_slug):
             companion.gender = request.POST["gender"]
 
         companion.save()
+        
+        # update charge if event is confirmed
+        if participation.event.confirmed: update_charge(participation)
 
-        # return an empty response
-        return HttpResponse()
+        # return a response with the calculated charge value
+        return HttpResponse(json.dumps({'charge': float(participation.charge)}),
+                            mimetype="text/javascript")
     else:
         return HttpResponseBadRequest()

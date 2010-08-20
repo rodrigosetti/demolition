@@ -93,6 +93,4 @@ class Companion(models.Model):
 
     def __unicode__(self):
         return "%s: %s%s" % (self.participation, self.gender, ", drinking" if self.drinking else "")
-
-    class Meta:
-        db_table = 'events_companions'
+        

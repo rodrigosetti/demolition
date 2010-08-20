@@ -31,6 +31,20 @@ abbr,acronym { border:0;
 
 /******************************************************************************/
 
+html {
+   background-color: gray;
+}
+
+body {
+   margin: 0 100px 0 100px;
+   padding: 80px 0 300px 0;
+   background-color: white;
+}
+
+input {
+    margin: 0 5px 0 5px;
+}
+
 .error, .loader, .work_done {
     display: none
 }
@@ -41,6 +55,32 @@ abbr,acronym { border:0;
 
 div#user {
     margin-bottom: 20px;
+    padding: 0 20px 0 20px;
+}
+
+#user_forms form {
+    margin-top: 20px;
+}
+
+.button {
+    text-decoration: none;
+    background-color: #555;
+    color: white;
+    padding: 4px;
+}
+
+.button:hover {
+    background-color: #777;
+}
+
+.warning {
+    font-size: 80%;
+    color: #222;
+}
+
+.error {
+    font-size: 80%;
+    color: red;
 }
 
 #full_name {
@@ -91,6 +131,14 @@ ul#events li a.selected {
 
 /** Participation layout **/
 
+#participation {
+   padding: 0 20px 0 20px;
+}
+
+#dates {
+    margin: 10px 0 10px 0;
+}
+
 #dates form {
     display: inline;
 }
@@ -103,6 +151,10 @@ ul#events li a.selected {
     margin: 20px 0 20px 0;
 }
 
+#companions {
+   margin: 10px 0 10px 0;
+}
+
 #companions li form {
     display: inline;
 }
@@ -113,4 +165,10 @@ ul#events li a.selected {
 
 #companions li img.remove {
     float: right;
+}
+
+/** Charge layout **/
+
+#charge_info {
+   margin-top: 10px;
 }

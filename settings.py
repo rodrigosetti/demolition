@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.comments',
     'demolition.events',
+    'django.contrib.markup',
 )
 
 # import local settings overriding the defaults

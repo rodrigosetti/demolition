@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% spaceless %}
 {% block head %}
     {{ block.super }}
     
@@ -124,10 +125,12 @@
                     type: "POST",
                     url: post_url,
                     data: data,
-                    success: function() {
+					dataType: 'json',
+                    success: function(data) {
                         $('#prefs_loader').hide();
                         $('#prefs_done').show();
                         $('#prefs_done').fadeOut(4000);
+						$('#charge').html(data["charge"]);
                     }
                 });
 
@@ -154,10 +157,12 @@
                     type: "POST",
                     url: post_url,
                     data: data,
-                    success: function() {
+					dataType: 'json',
+                    success: function(data) {
                         $('#dates_loader').hide();
                         $('#dates_done').show();
                         $('#dates_done').fadeOut(4000);
+						$('#charge').html(data["charge"]);
                     }
                 });
 
@@ -233,11 +238,12 @@
             // make call to url in order to obtain html
             $.post(post_url, {}, function(data) {
                 // append li element html into list
-                $('ul#companions').append(data);
+                $('ul#companions').append(data["html"]);
                 $('ul#companions li:last-child').hide();
                 $('ul#companions li:last-child').slideDown();
                 $('ul#companions li:last-child .hidden_submit').hide();
-	          });
+				$('#charge').html(data["charge"]);
+	          }, "json");
 
             return false;
         };
@@ -251,11 +257,13 @@
 	          type: "POST",
               data: {"id": id},
 	          url: post_url,
+			  dataType: 'json',
 	          success: function(data) {            
                 // slide up element(hide)
                 $('#companion_' + id).slideUp('slow', function() {
                     // remove element
                     $('#companion_' + id).remove();
+					$('#charge').html(data["charge"]);
                 });
 	          }
 	        });
@@ -280,11 +288,12 @@
 			$('#submit_companion_' + id).hide();
 			
             // send data
-			$.post(post_url, data, function() {
+			$.post(post_url, data, function(data) {
 		            $('#companion_loader_' + id).hide();
                     $('#companion_done_' + id).show()
 					$('#companion_done_' + id).fadeOut(4000);
-		          });
+					$('#charge').html(data["charge"]);
+		          }, 'json');
 
             return false;
         };
@@ -301,8 +310,9 @@
         </spam>
         <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
              onclick="return toggleuseredit()"/>
-        <a id="logout" href="{% url django.contrib.auth.views.logout_then_login %}" title="logout">
-            Logout
+        <a id="logout" href="{% url django.contrib.auth.views.logout_then_login %}" 
+		   class="button" title="logout">
+            logout
         </a>
     </p>
 
@@ -386,3 +396,4 @@
 </div>
 
 {% endblock %}
+{% endspaceless %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load markup %}
+
+{% spaceless %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+
+{{ event.info|markdown }}
+
+{% endblock %}
+
+{% endspaceless %}

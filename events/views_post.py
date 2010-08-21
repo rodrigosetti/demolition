@@ -67,7 +67,8 @@ def update_charge(participation):
                 if companion.drinking: value += event.drink_woman_day_add
 
         # multiply by the number of confirmed dates
-        days = ConfirmedDate.objects.filter(participation=participation).count()
+        days = ConfirmedDate.objects.filter(participation=participation,
+                                            date__confirmed=True).count()
         value *= days
        
         # now check if there is granularity

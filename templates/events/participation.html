@@ -22,14 +22,14 @@
     {% if participation.paid %}
     <p>Confirmed dates:</p>
     <ul id="confirmed_dates">
-        {% for day in possible_dates %}
+        {% for day, ok in possible_dates %}
             {% if day.confirmed %}
             <li>
                 {{ day.date|naturalday }}
                 {%if ok %}
                 <img src="{{ MEDIA_URL }}image/tick.gif" alt="OK" />
                 {% endif %}
-                </li>
+            </li>
             {%endif%}
         {% endfor %}
     </ul>

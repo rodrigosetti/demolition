@@ -1,18 +1,17 @@
 {% load humanize %}
-{% comment %}
 {% load markup %}
-{% endcomment %}
+{% load i18n %} 
 
 {% spaceless %}
 
 {% if event.info %}
     <p>
-    	Event Information
+    	{% trans "Event Information" %}
         <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_event_info"
                  onclick="return toggleeventinfo()"/>
     </p>
-    <div id="event_info">
-        {{ event.info }}
+    <div id="event_info" class="markdown">
+        {{ event.info|markdown }}
     </div>
 {% endif %}
 
@@ -20,14 +19,14 @@
 {%if event.confirmed %}
 
     {% if participation.paid %}
-    <p>Confirmed dates:</p>
+    <p>{% trans "Confirmed dates" %}:</p>
     <ul id="confirmed_dates">
         {% for day, ok in possible_dates %}
             {% if day.confirmed %}
             <li>
                 {{ day.date|naturalday }}
                 {%if ok %}
-                <img src="{{ MEDIA_URL }}image/tick.gif" alt="OK" />
+                <img src="{{ MEDIA_URL }}image/tick.gif" alt="{% trans "OK" %}" />
                 {% endif %}
             </li>
             {%endif%}
@@ -36,10 +35,10 @@
 
     {% else %}
 
-    <p>Please check dates you confirm to go:</p>
+    <p>{% trans "Please check dates you confirm to go" %}:</p>
     <form id="confirm_dates" method="post" 
-          action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
-          onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
+          action="{% url event_save_dates event.slug %}"
+          onsubmit="return savedates('{% url event_save_dates event.slug %}')">
         <ul id="dates">
             {% for day, ok in dates %}
                 {% if day.confirmed %}
@@ -52,18 +51,19 @@
                 {% endif %}
             {% endfor %}
         </ul>
-        <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
+        <input type="submit" id="submit_dates" value="{% trans "save" %}"
+               class="hidden_submit"/>
         <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
-        <spam class="work_done" id="dates_done">saved</spam>
+        <spam class="work_done" id="dates_done">{% trans "saved" %}</spam>
     </form>
     {% endif %}
 
 {% else %}
 
-    <p>Please check dates you have avaliability to go:</p>
+    <p>{% trans "Please check dates you have avaliability to go" %}:</p>
     <form id="possible_dates" method="post" 
-          action="{%url demolition.events.views_post.participation_save_dates event.slug %}"
-          onsubmit="return savedates('{%url demolition.events.views_post.participation_save_dates event.slug %}')">
+          action="{% url event_save_dates event.slug %}"
+          onsubmit="return savedates('{% url event_save_dates event.slug %}')">
         <ul id="dates">
             {% for day, ok in dates %}
             <li>
@@ -74,42 +74,46 @@
             </li>
             {% endfor %}
         </ul>
-        <input type="submit" id="submit_dates" value="save" class="hidden_submit"/>
+        <input type="submit" id="submit_dates" value="{% trans "save" %}"
+               class="hidden_submit"/>
         <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="dates_loader"/>
-        <spam class="work_done" id="dates_done">saved</spam>
+        <spam class="work_done" id="dates_done">{% trans "saved" %}</spam>
     </form>
 
 {% endif %}
 </div>
 
 <form id="preferences" method="post"
-      action="{%url demolition.events.views_post.participation_save_prefs event.slug %}"
-      onsubmit="return participationprefs('{%url demolition.events.views_post.participation_save_prefs event.slug %}')">
+      action="{% url event_save_prefs event.slug %}"
+      onsubmit="return participationprefs('{% url event_save_prefs event.slug %}')">
 
-    <label for="drinking">Drinking</label>:
+    <label for="drinking">{% trans "Drinking" %}</label>:
     <input id="drinking" name="drinking" type="checkbox"
            {% if participation.drinking %}checked{% endif %}
            onchange="$('#submit_prefs').show()"/>
 
     {% if event.needs_ride %}
-    <label for="self_transportation">Self transportation</label>:
+    <label for="self_transportation">{% trans "Self transportation" %}</label>:
     <input id="self_transportation" name="self_transportation" type="checkbox"
            {% if participation.self_transportation %}checked{% endif %}
            onchange="$('#submit_prefs').show()"/>
-    <label for="offer_ride">Offer Ride</label>:
+    <label for="offer_ride">{% trans "Offer Ride" %}</label>:
     <input id="offer_ride" name="offer_ride" type="checkbox"
            {% if participation.offer_ride %}checked{% endif %}
            onchange="$('#submit_prefs').show()"/>
     {% endif %}
 
-    <input id="submit_prefs" name="submit_prefs" type="submit" value="save" class="hidden_submit"/>
+    <input id="submit_prefs" name="submit_prefs" type="submit"
+           value="{% trans "save" %}" class="hidden_submit"/>
     <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="prefs_loader"/>
-    <spam class="work_done" id="prefs_done">saved</spam>
+    <spam class="work_done" id="prefs_done">{% trans "saved" %}</spam>
 </form>
 
 <div id="companions_edit">
 	<p id="companions_warning" class="warning">
-		Please do not add companions which are already signed in and invited to the same event.
+        {% blocktrans %}
+        Please do not add companions which are already signed in and invited to the same event.
+        {% endblocktrans %}
 	</p>
     <ul id="companions">
     {% for companion in companions %}
@@ -117,10 +121,10 @@
     {% endfor %}
     </ul>
     <p>
-        <a href="{% url demolition.events.views_post.participation_add_companion event.slug %}"
+        <a href="{% url event_add_companion event.slug %}"
            id="add_companion" class="button"
-           onclick="return addcompanion('{% url demolition.events.views_post.participation_add_companion event.slug %}')" >
-            add new companion
+           onclick="return addcompanion('{% url event_add_companion event.slug %}')" >
+            {% trans "add new companion" %}
         </a>
         <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="addcompanion_loader"/>
     </p>
@@ -130,15 +134,23 @@
 
 <div id="confirmed">
 {% if participation.paid %}
-    <p id="charge_info">Paiment confirmed: $<spam id='charge'>{{ participation.charge|floatformat:2 }}</spam></p>  
+    <p id="charge_info">
+        {% trans "Payment confirmed" %}: &#36;
+        <spam id='charge'>{{ participation.charge|floatformat:2 }}</spam>
+    </p>
 {% else %}
 	{% if event.billing_granularity > 0 %}
 	<p id="billing_warning" class="warning">
-		Please pay the exact amount(including the cents) in order for we to validate
-		your unique payment.
+        {% blocktrans %}
+		Please pay the exact amount(including the cents) in order for we to 
+        validate your unique payment.
+        {% endblocktrans %}
 	</p>
 	{% endif %}
-    <p id="charge_info">Charge value: $<spam id='charge'>{{ participation.charge|floatformat:2 }}</spam></p>
+    <p id="charge_info">
+        {% trans "Charge value" %}: &#36;
+        <spam id='charge'>{{ participation.charge|floatformat:2 }}</spam>
+    </p>
 {% endif %}
 </div>
 

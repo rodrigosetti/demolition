@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %} 
+
 {% spaceless %}
 
 {% block head %}
@@ -10,12 +12,9 @@
 {% block content %}
 
 <div id="login">
-    {% if form.errors %}
-    <p class="error">Your username and password didn't match. Please try again.</p>
-    {% endif %}
-
     <form id="login_form" method="post" action="{% url django.contrib.auth.views.login %}">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
 
         {{ form.username.label_tag }}
         {{ form.username }}
@@ -23,10 +22,19 @@
         {{ form.password.label_tag }}
         {{ form.password }}
         <br>
-        <input type="submit" value="log in" />
-        <input type="hidden" name="next" value="{{ next }}" />
+        <input type="submit" value="{% trans "log in" %}" id="submit_login"/>
+        <a href="{% url registration_signin %}" title="{% trans "sign in" %}"
+           class="button" id="signin">
+            {% trans "sign in" %}
+        </a>
     </form>
-</div>
+    {% if form.errors %}
+    <br>
+    <p class="error">
+        {% trans "Your username and password didn't match. Please try again" %}.
+    </p>
+    {% endif %}
+ </div>
 
 {% endblock %}
 {% endspaceless %}

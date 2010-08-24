@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %} 
+
 {% spaceless %}
 {% block head %}
     {{ block.super }}
@@ -47,7 +49,7 @@
 
 	        $.ajax({
 	          type: "POST",
-	          url: "{% url demolition.events.views_post.account_save %}",
+	          url: "{% url registration_save %}",
 	          data: data,
 	          success: function() {
 	          	$('#user_data_loader').hide();
@@ -89,7 +91,7 @@
 
 	        $.ajax({
 	          type: "POST",
-	          url: "{% url demolition.events.views_post.password_change %}",
+	          url: "{% url registration_password %}",
 	          data: data,
 	          success: function() {
 	            $('#password_change_loader').hide();
@@ -353,107 +355,115 @@
 
 {% block content %}
 
-<div id="content_a">
-<div id="content_b">
+<div id="content">
+    <div id="wrapper">
+    <div id="user">
+        <p id="user_head">
+            <spam id="full_name">
+                {{ user.first_name }} {{ user.last_name }}
+            </spam>
+            <spam> </spam>
+            <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
+                 onclick="return toggleuseredit()"/>
+            <a id="logout" href="{% url registration_logout %}" 
+		       class="button" title="{% trans "log out" %}">
+                {% trans "log out" %}
+            </a>
+        </p>
 
-<div id="user">
-    <p id="user_head">
-        <spam id="full_name">
-            {{ user.first_name }} {{ user.last_name }}
-        </spam>
-        <spam> </spam>
-        <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
-             onclick="return toggleuseredit()"/>
-        <a id="logout" href="{% url django.contrib.auth.views.logout_then_login %}" 
-		   class="button" title="logout">
-            logout
-        </a>
-    </p>
+        <div id="user_forms">
+            <form id="user_data" action="{% url registration_save %}"
+                  method="post" onsubmit="return submituser()">
+                <label for="first_name">{% trans "First Name" %}</label>:
+                <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
+         			   onchange="$('#submit_user').show()" size="15"/>
+                <label for="last_name">{% trans "Last Name" %}</label>:
+                <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
+         			   onchange="$('#submit_user').show()" size="15"/>
+                <br>
+                <label for="email">Email</label>:
+                <input id="email" name="email" type="text" value="{{ user.email }}"
+         			   onchange="$('#submit_user').show()"/>
+                <label for="phone">{% trans "Phone" %}</label>:
+                <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
+         			   onchange="$('#submit_user').show()" size="15"/>
+                <label for="gender">{% trans "Gender" %}</label>:
+                <select id="gender" name="gender" onchange="$('#submit_user').show()">
+                    <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>
+                        {% trans "Male" %}
+                    </option>
+                    <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>
+                        {% trans "Female" %}
+                    </option>
+                </select>
+                <input id="submit_user" name="submit_user" type="submit"
+                       value="{% trans "save" %}" class="hidden_submit"/>
+		        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
+		        <spam class="work_done" id="user_data_done">{% trans "saved" %}</spam>
 
-    <div id="user_forms">
-        <form id="user_data" action="{% url demolition.events.views_post.account_save %}"
-              method="post" onsubmit="return submituser()">
-            <label for="first_name">First Name</label>:
-            <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
-     			   onchange="$('#submit_user').show()" size="15"/>
-            <label for="last_name">Last Name</label>:
-            <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
-     			   onchange="$('#submit_user').show()" size="15"/>
-            <br>
-            <label for="email">Email</label>:
-            <input id="email" name="email" type="text" value="{{ user.email }}"
-     			   onchange="$('#submit_user').show()"/>
-            <label for="phone">Phone</label>:
-            <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
-     			   onchange="$('#submit_user').show()" size="15"/>
-            <label for="gender">Gender</label>:
-            <select id="gender" name="gender" onchange="$('#submit_user').show()">
-                <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>Male</option>
-                <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>Female</option>
-            </select>
-            <input id="submit_user" name="submit_user" type="submit" value="save" class="hidden_submit"/>
-		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
-		    <spam class="work_done" id="user_data_done">saved</spam>
+		        <br>
+		        <p class="error" id="user_data_error">
+			        {% trans "All fields are required" %}.
+			        <img src="{{ MEDIA_URL }}image/remove.png" alt="{% trans "close" %}" class="close"
+			         	 onclick="$('#user_data_error').slideUp()"
+                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                         onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
+		        </p>
+            </form>
 
-		    <br>
-		    <p class="error" id="user_data_error">
-			    All fields are required.
-			    <img src="{{ MEDIA_URL }}image/remove.png" alt="close" class="close"
-			     	 onclick="$('#user_data_error').slideUp()"
-                     onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
-                     onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
-		    </p>
-        </form>
-
-        <form id="user_password" action="{% url demolition.events.views_post.password_change %}"
-              method="post" onsubmit="return submitpassword()">
-            <label for="password">New Password</label>:
-            <input id="password" name="password" type="password" value="" size="12"
-     			   onchange="$('#submit_password').show()"/>
-            <label for="password_confirm">Confirm</label>:
-            <input id="password_confirm" name="password_confirm" type="password" value=""
-     			   onchange="$('#submit_password').show()" size="12"/>
-            <input id="submit_password" name="submit_password" type="submit"
-                   value="change password" class="hidden_submit"/>
-		    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
-		    <spam class="work_done" id="password_done">passsword changed</spam>
+            <form id="user_password" action="{% url registration_password %}"
+                  method="post" onsubmit="return submitpassword()">
+                <label for="password">{% trans "New Password" %}</label>:
+                <input id="password" name="password" type="password" value="" size="12"
+         			   onchange="$('#submit_password').show()"/>
+                <label for="password_confirm">{% trans "Confirm" %}</label>:
+                <input id="password_confirm" name="password_confirm" type="password" value=""
+         			   onchange="$('#submit_password').show()" size="12"/>
+                <input id="submit_password" name="submit_password" type="submit"
+                       value="{% trans "change password" %}" class="hidden_submit"/>
+		        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
+		        <spam class="work_done" id="password_done">{% trans "passsword changed" %}</spam>
 			
-		    <br>
-		    <p class="error" id="password_error">
-			    Password and confirmation must be non empty and equal.
-			    <img src="{{ MEDIA_URL }}image/remove.png" alt="close" class="close"
-			     	 onclick="$('#password_error').slideUp()"
-                     onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
-                     onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
-		    </p>
-		        
-        </form>
+		        <br>
+		        <p class="error" id="password_error">
+			        {% trans "Password and confirmation must be non empty and equal" %}.
+			        <img src="{{ MEDIA_URL }}image/remove.png" alt="{% trans "close" %}"
+                         class="close" onclick="$('#password_error').slideUp()"
+                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                         onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
+		        </p>
+		            
+            </form>
+        </div>
     </div>
-</div>
 
-<div id="participations">
-    <ul id="events">
-        {% for event in events %}
-            {% if not event.is_closed %}
-                <li id="event_{{ event.slug }}">
-                    <a href="{% url demolition.events.views.participation_details event.slug %}"
-                       {% if event_slug = event.slug %}class="selected"{% endif %}
-                       onclick="$('#events li a').removeClass('selected'); $(this).addClass('selected'); return loadparticipation('{% url demolition.events.views.participation_details event.slug %}')"
-                       title="{{ event.title }}">
-                        {{ event.title }}
-                    </a>
-                </li>
+    <div id="participations">
+        <ul id="events">
+            {% for event in events %}
+                {% if not event.is_closed %}
+                    <li id="event_{{ event.slug }}">
+                        <a href="{% url event_participation event.slug %}"
+                           {% if event_slug = event.slug %}class="selected"{% endif %}
+                           onclick="$('#events li a').removeClass('selected'); $(this).addClass('selected'); return loadparticipation('{% url event_participation event.slug %}')"
+                           title="{{ event.title }}">
+                            {{ event.title }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div id="participation">
+            {% if event_slug %}
+                {{ participation_data|safe }}
             {% endif %}
-        {% endfor %}
-    </ul>
-    <div id="participation">
-        {% if event_slug %}
-            {{ participation_data|safe }}
-        {% endif %}
+        </div>
     </div>
-</div>
-
-</div>
+    </div>
+    <p id="footnote">
+        Demolition &copy; 2010 Rodrigo Setti - 
+        {% trans "Please submit bugs to" %}
+        <a href="mailto:rodrigosetti@gmail.com">rodrigosetti@gmail.com</a>
+    </p>
 </div>
 
 {% endblock %}

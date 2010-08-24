@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load i18n %} 
+
+{% spaceless %}
+
+{% block head %}
+    {{ block.super }}
+    <link href="{{ MEDIA_URL }}style/signin.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    <div id="signin">
+        <div id="header">
+            <h1>{% trans "Sign in" %}</h1>
+            <a href="{% url registration_login %}" title="{% trans "back to log in page" %}">
+                {% trans "back to log in" %}
+            </a>
+        </div>
+
+        <form id="signin_form" method="post" action="{% url registration_signin %}">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" value="{% trans "sign in" %}" id="submit_signin"/>
+        </form>
+        <br>
+    </div>
+</div>
+
+{% endblock %}
+{% endspaceless %}

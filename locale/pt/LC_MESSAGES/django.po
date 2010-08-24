@@ -1,0 +1,307 @@
+# Tradução do projeto demolition.
+# Copyright (C) 2010 Rodrigo Setti
+# This file is distributed under the same license as the demolition package.
+# Rodrigo Setti <rodrigosetti@gmail.com>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: demolition 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-24 19:47+0000\n"
+"PO-Revision-Date: 2010-08-24 16:15+3\n"
+"Last-Translator: Rodrigo Setti <rodrigosetti@gmail.com>\n"
+"Language-Team: pt-br <rodrigosetti@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: events/admin.py:14
+#, fuzzy
+msgid "Charge Structure"
+msgstr "Valor cobrado"
+
+#: events/models.py:11
+msgid "Users are allow to select only confirmed dates"
+msgstr "Usuários são permitidos selecionar apenas datas confirmadas"
+
+#: events/models.py:12
+msgid "Does the event's place is far from everyone"
+msgstr "O evento é longe, sendo necessário transporte"
+
+#: events/models.py:29
+msgid "Event"
+msgstr "Evento"
+
+#: events/models.py:30
+msgid "Events"
+msgstr "Eventos"
+
+#: events/models.py:43
+msgid "Possible date"
+msgstr "Data possível"
+
+#: events/models.py:44
+msgid "Possible dates"
+msgstr "Datas possíveis"
+
+#: events/models.py:49 templates/events/companion_item.html:15
+#: templates/events/main.html:394
+msgid "Male"
+msgstr "Homem"
+
+#: events/models.py:50 templates/events/companion_item.html:16
+#: templates/events/main.html:397
+msgid "Female"
+msgstr "Mulher"
+
+#: events/models.py:61
+msgid "Person"
+msgstr "Pessoa"
+
+#: events/models.py:62
+msgid "Persons"
+msgstr "Pessoas"
+
+#: events/models.py:71
+msgid "Person plans to drink at event"
+msgstr "Pessoa pretende beber no evento"
+
+#: events/models.py:72
+msgid "Person manages to get there"
+msgstr "A pessoa tem meios de chegar"
+
+#: events/models.py:73
+msgid "Person can offer ride to the event's place"
+msgstr "Pode oferecer carona"
+
+#: events/models.py:75
+msgid "Person can join event"
+msgstr "Pessoa pode participar do evento"
+
+#: events/models.py:77
+msgid "The participation is paid"
+msgstr "Pagamento confirmado"
+
+#: events/models.py:80
+msgid "Participation"
+msgstr "Participação"
+
+#: events/models.py:81
+msgid "Participations"
+msgstr "Participações"
+
+#: events/models.py:94
+msgid "Confirmed date"
+msgstr "Data confirmada"
+
+#: events/models.py:95 templates/events/participation.html:22
+msgid "Confirmed dates"
+msgstr "Datas confirmadas"
+
+#: events/models.py:105
+msgid "Companion plans to drink at event"
+msgstr "Companhia pretende beber no evento"
+
+#: events/models.py:108
+msgid "Companion"
+msgstr "Acompanhante"
+
+#: events/models.py:109
+msgid "Companions"
+msgstr "Acompanhantes"
+
+#: events/models.py:110
+msgid "drinking"
+msgstr "Bebe"
+
+#: registration/forms.py:9 templates/events/main.html:378
+msgid "First Name"
+msgstr "Nome"
+
+#: registration/forms.py:10 templates/events/main.html:381
+msgid "Last Name"
+msgstr "Sobrenome"
+
+#: registration/forms.py:11
+msgid "Username"
+msgstr "Usuário"
+
+#: registration/forms.py:13 templates/events/main.html:388
+msgid "Phone"
+msgstr "Fone"
+
+#: registration/forms.py:14
+msgid "Password"
+msgstr "Senha"
+
+#: registration/forms.py:15
+msgid "Confirmation"
+msgstr "Confirmação"
+
+#: registration/forms.py:16 templates/events/main.html:391
+msgid "Gender"
+msgstr "Gênero"
+
+#: registration/forms.py:23
+#, python-format
+msgid "username %s is in use, please specify another one"
+msgstr "O nome de usuário %s está em uso, especifique outro"
+
+#: registration/forms.py:38
+msgid "please specify a password at least four characters"
+msgstr "Por favor especifique uma senha com no mínimo quatro letras"
+
+#: registration/forms.py:43
+msgid "password and confirmation does not match"
+msgstr "Senha e confirmação devem ser idênticas"
+
+#: templates/events/companion_item.html:10
+#: templates/events/participation.html:90
+msgid "Drinking"
+msgstr "Bebe"
+
+#: templates/events/companion_item.html:20 templates/events/main.html:401
+#: templates/events/participation.html:54
+#: templates/events/participation.html:77
+#: templates/events/participation.html:107
+msgid "save"
+msgstr "salvar"
+
+#: templates/events/companion_item.html:28
+msgid "remove"
+msgstr "remover"
+
+#: templates/events/companion_item.html:36 templates/events/main.html:403
+#: templates/events/participation.html:57
+#: templates/events/participation.html:80
+#: templates/events/participation.html:109
+msgid "saved"
+msgstr "salvo"
+
+#: templates/events/main.html:370 templates/events/main.html.py:371
+msgid "log out"
+msgstr "sair"
+
+#: templates/events/main.html:407
+msgid "All fields are required"
+msgstr "Todos os campos são requeridos"
+
+#: templates/events/main.html:408 templates/events/main.html.py:431
+msgid "close"
+msgstr "fechar"
+
+#: templates/events/main.html:417
+msgid "New Password"
+msgstr "Nova senha"
+
+#: templates/events/main.html:420
+msgid "Confirm"
+msgstr "Confirmação"
+
+#: templates/events/main.html:424
+msgid "change password"
+msgstr "alterar senha"
+
+#: templates/events/main.html:426
+msgid "passsword changed"
+msgstr "senha alterada"
+
+#: templates/events/main.html:430
+msgid "Password and confirmation must be non empty and equal"
+msgstr "Senha e confirmação devem ser iguais e não podems ser vazias"
+
+#: templates/events/participation.html:9
+msgid "Event Information"
+msgstr "Informações do Evento"
+
+#: templates/events/participation.html:29
+msgid "OK"
+msgstr "confirmado"
+
+#: templates/events/participation.html:38
+msgid "Please check dates you confirm to go"
+msgstr "Selecione as datas que você confirma presença"
+
+#: templates/events/participation.html:63
+msgid "Please check dates you have avaliability to go"
+msgstr "Selecione as datas que você tem disponibilidade"
+
+#: templates/events/participation.html:96
+msgid "Self transportation"
+msgstr "Transporte próprio"
+
+#: templates/events/participation.html:100
+msgid "Offer Ride"
+msgstr "Pode oferecer carona"
+
+#: templates/events/participation.html:114
+msgid ""
+"\n"
+"        Please do not add companions which are already signed in and invited "
+"to the same event.\n"
+"        "
+msgstr ""
+"\n"
+"Por favor não adicione acompanhantes que já estão cadastradas e convidadas "
+"para o mesmo evento"
+
+#: templates/events/participation.html:127
+msgid "add new companion"
+msgstr "adicionar acompanhante"
+
+#: templates/events/participation.html:138
+msgid "Payment confirmed"
+msgstr "Pagamento confirmado"
+
+#: templates/events/participation.html:144
+msgid ""
+"\n"
+"\t\tPlease pay the exact amount(including the cents) in order for we to \n"
+"        validate your unique payment.\n"
+"        "
+msgstr ""
+"\n"
+"Por favor pague a quantia exata(inclusive os centavos) para validarmos seu "
+"pagamento"
+
+#: templates/events/participation.html:151
+msgid "Charge value"
+msgstr "Valor cobrado"
+
+#: templates/events/participation_invite.html:6
+msgid "In order to participate in this event you must get and invitation"
+msgstr "Para participar deste evento você deve ser convidado"
+
+#: templates/events/participation_invite.html:11
+msgid "Request an invitation now"
+msgstr "Requisitar um convite agora"
+
+#: templates/events/participation_invite.html:18
+msgid "Invitation requested, please wait for approval"
+msgstr "Convite requisitado, por favor aguarde sua aprovação"
+
+#: templates/registration/login.html:25
+msgid "log in"
+msgstr "entrar"
+
+#: templates/registration/login.html:26 templates/registration/login.html:28
+#: templates/registration/signin.html:30
+msgid "sign in"
+msgstr "cadastrar"
+
+#: templates/registration/login.html:34
+msgid "Your username and password didn't match. Please try again"
+msgstr "Seu nome de usuário ou senha não batem. Por favor tente novamente"
+
+#: templates/registration/signin.html:19
+msgid "Sign in"
+msgstr "Cadastrar"
+
+#: templates/registration/signin.html:20
+msgid "back to log in page"
+msgstr "voltar para a página de entrada"
+
+#: templates/registration/signin.html:21
+msgid "back to log in"
+msgstr "voltar para entrada"

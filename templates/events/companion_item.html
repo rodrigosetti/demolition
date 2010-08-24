@@ -1,33 +1,39 @@
+{% load i18n %} 
+
 {% spaceless %}
 <li id="companion_{{ companion.id }}">
     <form id="companion_form_{{ companion.id }}" method="post" 
-          action="{% url demolition.events.views_post.participation_save_companion companion.participation.event.slug %}"
-          onsubmit="return savecompanion('{% url demolition.events.views_post.participation_save_companion companion.participation.event.slug %}', {{ companion.id }})">
+          action="{% url event_save_companion companion.participation.event.slug %}"
+          onsubmit="return savecompanion('{% url event_save_companion companion.participation.event.slug %}', {{ companion.id }})">
         <input type="hidden" name="id" value="{{ companion.id }}"
                onchange="$('#submit_companion_{{ companion.id }}').show()" />
-        <label for="drinking">Drinking</label>
+        <label for="drinking">{% trans "Drinking" %}</label>:
         <input name="drinking" type="checkbox" {% if companion.drinking %}checked{% endif %}
                onchange="$('#submit_companion_{{ companion.id }}').show()" />
         <select id="gender" name="gender" 
                 onchange="$('#submit_companion_{{ companion.id }}').show()">
-            <option value="M" {% if companion.gender = "M" %}selected{% endif %}>Male</option>
-            <option value="F" {% if companion.gender = "F" %}selected{% endif %}>Female</option>
+            <option value="M" {% if companion.gender = "M" %}selected{% endif %}>{% trans "Male" %}</option>
+            <option value="F" {% if companion.gender = "F" %}selected{% endif %}>{% trans "Female" %}</option>
         </select>
 
-        <input type="submit" id="submit_companion_{{ companion.id }}" value="save" class="hidden_submit"/>
+        <input type="submit" id="submit_companion_{{ companion.id }}"
+               value="{% trans "save" %}" class="hidden_submit"/>
     </form>
 
     <form class="remove" method="post"
-          action="{% url demolition.events.views_post.participation_del_companion companion.participation.event.slug %}"
-          onsubmit="return deletecompanion('{% url demolition.events.views_post.participation_del_companion companion.participation.event.slug %}', {{ companion.id }})">
+          action="{% url event_del_companion companion.participation.event.slug %}"
+          onsubmit="return deletecompanion('{% url event_del_companion companion.participation.event.slug %}', {{ companion.id }})">
         <input type="hidden" name="id" value="{{ companion.id }}" />
         <input type="image" src="{{ MEDIA_URL}}image/remove.png" 
-               name="remove_companion" alt="remove" 
+               name="remove_companion" alt="{% trans "remove" %}" 
                onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
                onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
     </form>
 
-    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="companion_loader_{{ companion.id }}"/>
-    <spam class="work_done" id="companion_done_{{ companion.id }}">saved</spam>
+    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader"
+         id="companion_loader_{{ companion.id }}"/>
+    <spam class="work_done" id="companion_done_{{ companion.id }}">
+        {% trans "saved" %}
+    </spam>
 </li>
 {% endspaceless %}

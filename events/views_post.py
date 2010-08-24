@@ -19,8 +19,8 @@ def ajax_post_login(view_func):
     Decorator check if request is POST, user is logged in and redirect if not Ajax.
     """
     def _decorated(request, *args, **kwargs): 
-#        if request.method != "POST":
-#            return HttpResponseBadRequest()  
+        if request.method != "POST":
+            return HttpResponseBadRequest()  
         if request.user and request.user.is_authenticated() and request.user.is_active:
 
             response = view_func(request, *args, **kwargs)
@@ -91,55 +91,6 @@ def update_charge(participation):
         # save charge value 
         participation.charge = value
         participation.save()
-
-
-@ajax_post_login
-def account_save(request):
-    """
-    Saves user data via POST method to be used as ajax request.
-    The response is quiet.
-    """
-    # edit attributes
-    if "first_name" in request.POST:
-        request.user.first_name = request.POST["first_name"]
-    if "last_name" in request.POST:
-        request.user.last_name = request.POST["last_name"]
-    if "email" in request.POST:
-        request.user.email = request.POST["email"]
-
-    profile = request.user.get_profile()
-
-    if "gender" in request.POST:
-        profile.gender = request.POST["gender"]
-    if "phone" in request.POST:
-        profile.phone = request.POST["phone"]
-
-    # saves user data
-    request.user.save()
-    profile.save()
-
-    # return an empty response
-    return HttpResponse()
-
-@ajax_post_login
-def password_change(request):
-    """
-    Changes password via POST method to be used as ajax request.
-    The response is quiet.
-    """
-    # check if password and confirm match
-    if ("password" in request.POST and "password_confirm" in request.POST and 
-        request.POST["password"] == request.POST["password_confirm"]):
-        # edit attributes
-        request.user.set_password(request.POST["password"])
-
-        # saves
-        request.user.save()
-
-        # return an empty response
-        return HttpResponse()
-    else:
-        return HttpResponseBadRequest()
 
 @ajax_post_login
 def invitation(request, event_slug):

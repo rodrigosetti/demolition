@@ -1,0 +1,89 @@
+*					{ margin: 0; padding: 0; }
+
+ol,ul {
+	list-style:none;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #d3d3d3;
+    font-family: Georgia, serif;
+    color: #3a3a3a;
+    text-align: center;
+    height: 100%;
+}
+
+#content {
+    background: url(../image/content-bg.png) repeat-y #c1d4e5;
+    width: 746px;
+    margin: 0 auto 0 auto;
+    text-align: center;
+    padding: 0 27px 0 27px;
+    min-height: 100%;
+}
+
+label {
+    width: 115px;
+    text-align: right;
+    float: left; 
+    margin: 0 10px 0 0;
+    padding: 9px 0 0 0;
+    font-size: 16px;
+}
+
+input {
+    width: 220px;
+    padding: 4px;
+    margin: 0 0 10px 0;
+    font-size: 18px;
+	color: #3a3a3a;
+    font-family: Georgia, serif;
+}
+
+form#signin_form {
+    width: 400px;
+    text-align: left;
+    margin: 0 auto 0 auto;
+}
+
+#signin {
+    padding-top: 20px;
+}
+
+#header {
+    padding-bottom: 20px;
+    margin-left: 20px;
+}
+
+#submit_signin {
+    margin-top: 40px;
+    background: url(../image/button-bg-2.png) repeat-x top center;
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    width: 230px;
+    padding: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+#submit_signin:hover	{
+    background: white;
+    color: black;
+}
+
+.errorlist {
+    color: black;
+    font-size: 80%;
+    background-color: #f66;
+    vertical-align: middle;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}

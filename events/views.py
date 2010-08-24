@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from events.models import Event, Participation, PossibleDate, ConfirmedDate, Companion
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.template import RequestContext
 from views_post import update_charge
 
@@ -13,13 +13,38 @@ def main(request, event_slug=None):
     where heavy ajax functionality must be used to integrate user data,
     events tabs and participation pages
     """
+    print request.LANGUAGE_CODE
+
     context = {"user": request.user, "events": Event.objects.all()};
+
+    # if there is not an explicit event, try to get one
+    if not event_slug:
+        # get all events which are not closed
+        events = [e for e in list(Event.objects.all()) if not e.is_closed()]
+
+        if events:
+            event_slug = events[0].slug
+
+            # check participating events
+            participations = [p for p in 
+                              list(Participation.objects.filter(person=request.user)) 
+                              if p.event in events]
+            if participations:
+                event_slug = participations[0].event.slug
+
+                # check accepted participations
+                participations = [p for p in participations if p.accepted]
+                if participations:
+                    event_slug = participations[0].event.slug
+
     if event_slug:
         context["event_slug"] = event_slug
-        context["participation_data"] = participation_details(request, event_slug, is_ajax=True).content
+        context["participation_data"] = participation_details(request,
+                                                              event_slug,
+                                                              is_ajax=True).content
 
     return render_to_response("events/main.html", context,
-                       context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 @login_required

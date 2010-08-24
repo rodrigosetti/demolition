@@ -3,25 +3,66 @@ body				{ font-family: Georgia, serif; background: url(../image/login-page-bg.jp
 
 form				{ width: 406px; margin: 170px auto 0; }
 
-label				{ width: 115px; text-align: right; float: left; margin: 0 10px 0 0; padding: 9px 0 0 0; font-size: 16px; }
+label {
+    width: 115px;
+    text-align: right;
+    float: left;
+    margin: 0 10px 0 0;
+    padding: 9px 0 0 0;
+    font-size: 16px;
+}
 
-input				{ width: 220px; display: block; padding: 4px; margin: 0 0 10px 0; font-size: 18px;
-					  color: #3a3a3a; font-family: Georgia, serif;}
+input {
+    width: 220px;
+    display: block;
+    padding: 4px;
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #3a3a3a;
+    font-family: Georgia, serif;
+}
+
 input[type=checkbox]{ width: 20px; margin: 0; display: inline-block; }
-					  
-input[type=submit]  { background: url(../image/button-bg.png) repeat-x top center; border: 1px solid #999;
-					  -moz-border-radius: 5px; padding: 5px; color: black; font-weight: bold;
-					  -webkit-border-radius: 5px; font-size: 13px;  width: 70px; }
-input[type=submit]:hover	{ background: white; color: black; }
 
-.error {
-    margin: 10px;
+#submit_login {
+    background: url(../image/button-bg.png) repeat-x top center;
+    float: right;
+}
+
+#signin {
+    background: url(../image/button-bg-2.png) repeat-x top center;
+    float: left;
+}
+					  
+#submit_login, #signin  {    
+    border: 1px solid #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 13px;
+    width: 30%;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+#submit_login:hover, #signin:hover	{
+    background: white;
+    color: black;
+}
+
+p.error {
+    display: block;
+    margin: 50px auto 0 auto;
     color: black;
     font-size: 80%;
+    width: 450px;
     background-color: #f66;
     vertical-align: middle;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    padding-left: 10px;
-    height: 24px;
+    padding: 5px;
+    text-align: center;
 }

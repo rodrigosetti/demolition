@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import ugettext as _
 from events.models import *
     
 class PossibleDateInline(admin.TabularInline):
@@ -10,7 +11,7 @@ class EventAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('title', 'slug', 'info',  'confirmed', 'needs_ride'),
             }),
-        ('Charge Structure', {
+        (_(u"Charge Structure"), {
             'classes': ('collapse',),
             'fields' : ('men_base_day', 'woman_base_day', 'drink_men_day_add', 
                         'drink_woman_day_add', 'billing_granularity'),

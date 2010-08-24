@@ -6,37 +6,37 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    # login and logout pages
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    (r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
-
     (r'^$', 'django.views.generic.simple.redirect_to', {'url': '/events/', 'permanent': True}),
+
+    # user account stuff
+    (r'^accounts/',        include('registration.urls')),
 
     #### post ####
 
-    # saves user data
-    (r'^accounts/save/$', 'demolition.events.views_post.account_save'),
-
-    # changes password
-    (r'^accounts/password/$', 'demolition.events.views_post.password_change'),
-
     # invitation to event: create a partitipation
-    (r'^event/(?P<event_slug>.*)/invite/$', 'demolition.events.views_post.invitation'),
+    url(r'^event/(?P<event_slug>.*)/invite/$', 'events.views_post.invitation',
+        name="event_invitation"),
 
     # saves participation data: dates, prefs, companions(add, remove edit)
-    (r'^event/(?P<event_slug>.*)/dates$', 'demolition.events.views_post.participation_save_dates'),
-    (r'^event/(?P<event_slug>.*)/prefs$', 'demolition.events.views_post.participation_save_prefs'),
-    (r'^event/(?P<event_slug>.*)/companion/add$', 'demolition.events.views_post.participation_add_companion'),
-    (r'^event/(?P<event_slug>.*)/companion/del$', 'demolition.events.views_post.participation_del_companion'),
-    (r'^event/(?P<event_slug>.*)/companion/save$', 'demolition.events.views_post.participation_save_companion'),
+    url(r'^event/(?P<event_slug>.*)/dates$', 'events.views_post.participation_save_dates',
+        name="event_save_dates"),
+    url(r'^event/(?P<event_slug>.*)/prefs$', 'events.views_post.participation_save_prefs',
+        name="event_save_prefs"),
+    url(r'^event/(?P<event_slug>.*)/companion/add$', 'events.views_post.participation_add_companion',
+        name="event_add_companion"),
+    url(r'^event/(?P<event_slug>.*)/companion/del$', 'events.views_post.participation_del_companion',
+        name="event_del_companion"),
+    url(r'^event/(?P<event_slug>.*)/companion/save$', 'events.views_post.participation_save_companion',
+        name="event_save_companion"),
 
     #### get ####
     
     # list user-data and participations tabs
-    (r'^events/$', 'demolition.events.views.main'),
+    url(r'^events/$', 'events.views.main', name="event_main"),
 
     # gets a participation page
-    (r'^event/(?P<event_slug>.*)/$', 'demolition.events.views.participation_details'),
+    url(r'^event/(?P<event_slug>.*)/$', 'events.views.participation_details',
+        name="event_participation"),
 
     #### admin page ####
     (r'^admin/', include(admin.site.urls)),

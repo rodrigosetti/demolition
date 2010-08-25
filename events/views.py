@@ -5,6 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.template import RequestContext
 from views_post import update_charge
+from django.contrib.comments.models import Comment
+from django.contrib.contenttypes.models import ContentType
 
 @login_required
 def main(request, event_slug=None):
@@ -13,8 +15,6 @@ def main(request, event_slug=None):
     where heavy ajax functionality must be used to integrate user data,
     events tabs and participation pages
     """
-    print request.LANGUAGE_CODE
-
     context = {"user": request.user, "events": Event.objects.all()};
 
     # if there is not an explicit event, try to get one
@@ -118,4 +118,27 @@ def participation_details(request, event_slug, is_ajax=False):
     else:
         # else, return a full page of application's main focused on event
         return main(request, event_slug)
+
+@login_required
+def get_comments(request, event_slug):
+    """
+    Get comments from event if user has participation and is accepted since
+    datetime described
+    """
+    # get event object
+    event = get_object_or_404(Event, slug=event_slug)
+
+    # get participation object
+    participation = get_object_or_404(Participation, accepted=True,
+                                      person = request.user.get_profile(),
+                                      event = event)
+
+    # get comments objects
+    comments = Comment.objects.filter(content_type=ContentType.objects.get_for_model(Event),
+                                      object_pk=event.id)
+
+    return render_to_response("comments/comment_list.html",
+                              {"comments": comments, "user": request.user,
+                               "event": event},
+                              context_instance=RequestContext(request))
 

@@ -12,6 +12,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
+from datetime import datetime
+from django.contrib.sites.models import Site
+from django.contrib.comments.models import Comment
 import json
 
 def ajax_post_login(view_func):
@@ -114,7 +117,7 @@ def participation_save_dates(request, event_slug):
     Saves data of participation dates
     """
     # get participation object
-    participation = get_object_or_404(Participation, 
+    participation = get_object_or_404(Participation, accepted=True,
                                       person = request.user.get_profile(),
                                       event__slug = event_slug)
     
@@ -147,7 +150,7 @@ def participation_save_prefs(request, event_slug):
     Saves data of participation preferences
     """
     # get participation object
-    participation = get_object_or_404(Participation, 
+    participation = get_object_or_404(Participation, accepted=True,
                                       person = request.user.get_profile(),
                                       event__slug = event_slug)
 
@@ -174,7 +177,7 @@ def participation_add_companion(request, event_slug):
     Adds a companion object into participation
     """
     # get participation object
-    participation = get_object_or_404(Participation, 
+    participation = get_object_or_404(Participation, accepted=True,
                                       person = request.user.get_profile(),
                                       event__slug = event_slug)
 
@@ -202,7 +205,7 @@ def participation_del_companion(request, event_slug):
     Removes a companion object
     """
     # get participation object
-    participation = get_object_or_404(Participation, 
+    participation = get_object_or_404(Participation, accepted=True,
                                       person = request.user.get_profile(),
                                       event__slug = event_slug)
 
@@ -231,7 +234,7 @@ def participation_save_companion(request, event_slug):
     Edit companion object's data
     """
     # get participation object
-    participation = get_object_or_404(Participation, 
+    participation = get_object_or_404(Participation, accepted=True,
                                       person = request.user.get_profile(),
                                       event__slug = event_slug)
 
@@ -256,5 +259,53 @@ def participation_save_companion(request, event_slug):
         # return a response with the calculated charge value
         return HttpResponse(json.dumps({'charge': "%.02f" % participation.charge}),
                             mimetype="text/javascript")
+    else:
+        return HttpResponseBadRequest()
+
+@ajax_post_login
+def submit_comment(request, event_slug):
+    "submits a new comment associated with event"
+
+    # checks for bad request
+    if "comment_text" not in request.POST:
+        return HttpResponseBadRequest()
+
+    # get event object
+    event = get_object_or_404(Event, slug=event_slug)
+
+    # get participation object
+    participation = get_object_or_404(Participation, accepted=True,
+                                      person = request.user.get_profile(),
+                                      event = event)
+
+    # create a comment object and save
+    comment = Comment(content_object=event, user=request.user, 
+                      site=Site.objects.get_current(),
+                      user_name=request.user.get_full_name(),
+                      user_email=request.user.email,
+                      comment=request.POST["comment_text"],
+                      submit_date=datetime.now(), 
+                      ip_address=request.META["REMOTE_ADDR"],
+                      is_public=True)
+    comment.save()
+
+    # return an empty response
+    return HttpResponse()
+
+@ajax_post_login
+def del_comment(request, event_slug):
+    "Removes a comment object"
+    # get participation object
+    participation = get_object_or_404(Participation, accepted=True,
+                                      person = request.user.get_profile(),
+                                      event__slug = event_slug)
+
+    # get comment in order to delete
+    if "id" in request.POST:
+        comment =  get_object_or_404(Comment, id=int(request.POST["id"]))
+        comment.is_removed = True
+        comment.save()
+        
+        return HttpResponse()
     else:
         return HttpResponseBadRequest()

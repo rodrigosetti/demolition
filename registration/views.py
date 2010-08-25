@@ -42,10 +42,10 @@ def password_change(request):
     The response is quiet.
     """
     # check if password and confirm match
-    if ("password" in request.POST and "password_confirm" in request.POST and 
-        request.POST["password"] == request.POST["password_confirm"]):
+    if ("password1" in request.POST and "password2" in request.POST and 
+        request.POST["password1"] == request.POST["password2"]):
         # edit attributes
-        request.user.set_password(request.POST["password"])
+        request.user.set_password(request.POST["password1"])
 
         # saves
         request.user.save()

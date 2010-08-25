@@ -20,7 +20,7 @@
                value="{% trans "save" %}" class="hidden_submit"/>
     </form>
 
-    <form class="remove" method="post"
+    <form class="remove" method="post" title="{% trans "remove companion" %}"
           action="{% url event_del_companion companion.participation.event.slug %}"
           onsubmit="return deletecompanion('{% url event_del_companion companion.participation.event.slug %}', {{ companion.id }})">
         <input type="hidden" name="id" value="{{ companion.id }}" />

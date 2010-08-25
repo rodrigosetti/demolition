@@ -185,12 +185,27 @@ input[type=submit]:hover, .button:hover {
     cursor: pointer;
 }
 
+#user_head {
+    height: 38px;
+    position: relative;
+}
+
+#user_head img{
+    vertical-align: -2px;
+}
+
+#logout {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
 div#user {
-    padding: 60px 20px 20px 20px;
+    padding: 60px 20px 20px 0;
 }
 
 #user_forms form {
-    padding-top: 20px;
+    padding: 20px 0 0 20px;
 }
 
 input[type=image] {
@@ -221,18 +236,17 @@ input[type=image] {
     height: 24px;
 }
 
-.close {
+.close, .remove {
     cursor: pointer;
+}
+
+.close, {
     float: right;
 }
 
 #full_name {
-    font-size: 150%;
+    font-size: 22px;
     padding-bottom: 10px;
-}
-
-#logout {
-    float: right;
 }
 
 /** Events menu styling **/
@@ -356,4 +370,67 @@ p#invitation_info {
    margin-top: 10px;
 }
 
+/** Comments layout **/
+#comments {
+    background-color: #b5cbe2;
+    margin: 10px 0 10px 0;
+}
 
+#comments h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+#comment_form p {
+    height: 80px;
+}
+
+#comment_form textarea {
+    display: inline;
+    height: 76px;
+    width: 520px;
+} 
+
+#submit_comment {
+    height: 80px;
+    width: 150px;
+    float: right;
+    cursor: pointer;
+}
+
+#comment_list li {
+    padding: 10px 5px 30px 5px;
+    position: relative;
+}
+
+#comment_list li:nth-child(odd) {
+    background-color: #c1d4e5;
+}
+
+#comment_list li .remove {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+#comment_list li .username {
+    padding-bottom: 15px;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#comment_list li .submit_date {
+    position: absolute;
+    font-size: 12px;
+    right: 5px;
+    bottom: 5px;
+}
+
+#comments_header {
+    padding: 10px;
+}
+
+#comments_update_wrapper {
+    margin-top: 20px;
+}

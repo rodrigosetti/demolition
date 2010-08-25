@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: demolition 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 01:41+0000\n"
+"POT-Creation-Date: 2010-08-25 19:05+0000\n"
 "PO-Revision-Date: 2010-08-24 16:15+3\n"
 "Last-Translator: Rodrigo Setti <rodrigosetti@gmail.com>\n"
 "Language-Team: pt-br <rodrigosetti@gmail.com>\n"
@@ -45,12 +45,12 @@ msgid "Possible dates"
 msgstr "Datas possíveis"
 
 #: events/models.py:49 templates/events/companion_item.html:15
-#: templates/events/main.html:393
+#: templates/events/main.html:52
 msgid "Male"
 msgstr "Homem"
 
 #: events/models.py:50 templates/events/companion_item.html:16
-#: templates/events/main.html:396
+#: templates/events/main.html:55
 msgid "Female"
 msgstr "Mulher"
 
@@ -94,7 +94,7 @@ msgstr "Participações"
 msgid "Confirmed date"
 msgstr "Data confirmada"
 
-#: events/models.py:99 templates/events/participation.html:22
+#: events/models.py:99 templates/events/participation.html:23
 msgid "Confirmed dates"
 msgstr "Datas confirmadas"
 
@@ -114,11 +114,11 @@ msgstr "Acompanhante"
 msgid "Companions"
 msgstr "Acompanhantes"
 
-#: registration/forms.py:9 templates/events/main.html:377
+#: registration/forms.py:9 templates/events/main.html:36
 msgid "First Name"
 msgstr "Nome"
 
-#: registration/forms.py:10 templates/events/main.html:380
+#: registration/forms.py:10 templates/events/main.html:39
 msgid "Last Name"
 msgstr "Sobrenome"
 
@@ -126,7 +126,7 @@ msgstr "Sobrenome"
 msgid "Username"
 msgstr "Usuário"
 
-#: registration/forms.py:13 templates/events/main.html:387
+#: registration/forms.py:13 templates/events/main.html:46
 msgid "Phone"
 msgstr "Fone"
 
@@ -138,7 +138,7 @@ msgstr "Senha"
 msgid "Confirmation"
 msgstr "Confirmação"
 
-#: registration/forms.py:16 templates/events/main.html:390
+#: registration/forms.py:16 templates/events/main.html:49
 msgid "Gender"
 msgstr "Gênero"
 
@@ -155,90 +155,103 @@ msgstr "Por favor especifique uma senha com no mínimo quatro letras"
 msgid "password and confirmation does not match"
 msgstr "Senha e confirmação devem ser idênticas"
 
-#: templates/events/companion_item.html:10
-#: templates/events/participation.html:90
-msgid "Drinking"
-msgstr "Bebe"
+#: templates/comments/comment_list.html:14
+msgid "remove comment"
+msgstr "remover comentário"
 
-#: templates/events/companion_item.html:20 templates/events/main.html:400
-#: templates/events/participation.html:54
-#: templates/events/participation.html:77
-#: templates/events/participation.html:107
-msgid "save"
-msgstr "salvar"
-
+#: templates/comments/comment_list.html:15
 #: templates/events/companion_item.html:28
 msgid "remove"
 msgstr "remover"
 
-#: templates/events/companion_item.html:36 templates/events/main.html:402
-#: templates/events/participation.html:57
-#: templates/events/participation.html:80
-#: templates/events/participation.html:109
+#: templates/comments/comment_list.html:23
+msgid "No comments"
+msgstr "Nenhum comentário"
+
+#: templates/events/companion_item.html:10
+#: templates/events/participation.html:91
+msgid "Drinking"
+msgstr "Bebe"
+
+#: templates/events/companion_item.html:20 templates/events/main.html:59
+#: templates/events/participation.html:55
+#: templates/events/participation.html:78
+#: templates/events/participation.html:108
+msgid "save"
+msgstr "salvar"
+
+#: templates/events/companion_item.html:23
+msgid "remove companion"
+msgstr "remover acompanhante"
+
+#: templates/events/companion_item.html:36 templates/events/main.html:61
+#: templates/events/participation.html:58
+#: templates/events/participation.html:81
+#: templates/events/participation.html:110
 msgid "saved"
 msgstr "salvo"
 
-#: templates/events/main.html:369 templates/events/main.html.py:370
+#: templates/events/main.html:28 templates/events/main.html.py:29
 msgid "log out"
 msgstr "sair"
 
-#: templates/events/main.html:406
+#: templates/events/main.html:65
 msgid "All fields are required"
 msgstr "Todos os campos são requeridos"
 
-#: templates/events/main.html:407 templates/events/main.html.py:430
+#: templates/events/main.html:66 templates/events/main.html.py:89
 msgid "close"
 msgstr "fechar"
 
-#: templates/events/main.html:416
+#: templates/events/main.html:75
 msgid "New Password"
 msgstr "Nova senha"
 
-#: templates/events/main.html:419
+#: templates/events/main.html:78
 msgid "Confirm"
 msgstr "Confirmação"
 
-#: templates/events/main.html:423
+#: templates/events/main.html:82
 msgid "change password"
 msgstr "alterar senha"
 
-#: templates/events/main.html:425
+#: templates/events/main.html:84
 msgid "passsword changed"
 msgstr "senha alterada"
 
-#: templates/events/main.html:429
+#: templates/events/main.html:88
 msgid "Password and confirmation must be non empty and equal"
 msgstr "Senha e confirmação devem ser iguais e não podems ser vazias"
 
-#: templates/events/main.html:464
+#: templates/events/main.html:123
 msgid "Please submit bugs to"
 msgstr "Por favor submeta bugs para"
 
-#: templates/events/participation.html:9
+#: templates/events/participation.html:10
 msgid "Event Information"
 msgstr "Informações do Evento"
 
-#: templates/events/participation.html:29
+#: templates/events/participation.html:30
 msgid "OK"
 msgstr "confirmado"
 
-#: templates/events/participation.html:38
+#: templates/events/participation.html:39
 msgid "Please check dates you confirm to go"
 msgstr "Selecione as datas que você confirma presença"
 
-#: templates/events/participation.html:63
+#: templates/events/participation.html:64
 msgid "Please check dates you have avaliability to go"
 msgstr "Selecione as datas que você tem disponibilidade"
 
-#: templates/events/participation.html:96
+#: templates/events/participation.html:97
 msgid "Self transportation"
 msgstr "Transporte próprio"
 
-#: templates/events/participation.html:100
+#: templates/events/participation.html:101
 msgid "Offer Ride"
 msgstr "Pode oferecer carona"
 
-#: templates/events/participation.html:114
+#: templates/events/participation.html:115
 msgid ""
 "\n"
 "        Please do not add companions which are already signed in and invited "
@@ -249,15 +262,15 @@ msgstr ""
 "Por favor não adicione acompanhantes que já estão cadastrados e convidados "
 "para o mesmo evento"
 
-#: templates/events/participation.html:127
+#: templates/events/participation.html:128
 msgid "add new companion"
 msgstr "adicionar acompanhante"
 
-#: templates/events/participation.html:138
+#: templates/events/participation.html:139
 msgid "Payment confirmed"
 msgstr "Pagamento confirmado"
 
-#: templates/events/participation.html:144
+#: templates/events/participation.html:145
 msgid ""
 "\n"
 "\t\tPlease pay the exact amount(including the cents) in order for we to \n"
@@ -268,9 +281,25 @@ msgstr ""
 "Por favor pague a quantia exata(inclusive os centavos) para validarmos seu "
 "pagamento"
 
-#: templates/events/participation.html:151
+#: templates/events/participation.html:152
 msgid "Charge value"
 msgstr "Valor cobrado"
+
+#: templates/events/participation.html:162
+msgid "Comments"
+msgstr "Comentários"
+
+#: templates/events/participation.html:171
+msgid "post comment"
+msgstr "enviar comentário"
+
+#: templates/events/participation.html:176
+msgid "update comments"
+msgstr "atualizar comentários"
+
+#: templates/events/participation.html:178
+msgid "update"
+msgstr "atualizar"
 
 #: templates/events/participation_invite.html:6
 msgid "In order to participate in this event you must get and invitation"

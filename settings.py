@@ -39,12 +39,15 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/setti/public_html/demolition'
+MEDIA_ROOT = '/home/setti/Projetos/demolition/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://localhost:8080/~setti/demolition/'
+MEDIA_URL = '/demolition-media/'
+
+# URL of the main.js used by the main.html template
+MAIN_JS_URL = '/events/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.

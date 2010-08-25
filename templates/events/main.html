@@ -6,7 +6,7 @@
 {% block head %}
     {{ block.super }}
  
-    <link href="{{ MEDIA_URL }}style/main.css" rel="stylesheet" type="text/css">   
+    <link href="{{ MEDIA_URL }}style/main.css" rel="stylesheet" type="text/css" />   
     <script type="text/javascript" src="{{ MEDIA_URL }}script/jquery-1.4.2.min.js"></script> 
     <script type="text/javascript" src="{{ MAIN_JS_URL }}main.js"></script> 
 
@@ -19,10 +19,10 @@
     <div id="user">
         <p id="user_head">
             <img src="{{ MEDIA_URL }}image/gear.png" alt="" />
-            <spam id="full_name">
+            <span id="full_name">
                 {{ user.first_name }} {{ user.last_name }}
-            </spam>
-            <spam> </spam>
+            </span>
+            <span> </span>
             <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_edit"
                  onclick="return toggleuseredit()"/>
             <a id="logout" href="{% url registration_logout %}" 
@@ -34,65 +34,76 @@
         <div id="user_forms">
             <form id="user_data" action="{% url registration_save %}"
                   method="post" onsubmit="return submituser()">
-                <label for="first_name">{% trans "First Name" %}</label>:
-                <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
-         			   onchange="$('#submit_user').show()" size="15"/>
-                <label for="last_name">{% trans "Last Name" %}</label>:
-                <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
-         			   onchange="$('#submit_user').show()" size="15"/>
-                <br>
-                <label for="email">Email</label>:
-                <input id="email" name="email" type="text" value="{{ user.email }}"
-         			   onchange="$('#submit_user').show()"/>
-                <label for="phone">{% trans "Phone" %}</label>:
-                <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
-         			   onchange="$('#submit_user').show()" size="15"/>
-                <label for="gender">{% trans "Gender" %}</label>:
-                <select id="gender" name="gender" onchange="$('#submit_user').show()">
-                    <option value="M" {% if user.get_profile.gender = "M" %}selected{% endif %}>
-                        {% trans "Male" %}
-                    </option>
-                    <option value="F" {% if user.get_profile.gender = "F" %}selected{% endif %}>
-                        {% trans "Female" %}
-                    </option>
-                </select>
-                <input id="submit_user" name="submit_user" type="submit"
-                       value="{% trans "save" %}" class="hidden_submit"/>
-		        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
-		        <spam class="work_done" id="user_data_done">{% trans "saved" %}</spam>
-
-		        <br>
+                <p class="fieldwrapper">
+                    <label for="first_name">{% trans "First Name" %}</label>:
+                    <input id="first_name" name="first_name" type="text" value="{{ user.first_name }}"
+             			   onchange="$('#submit_user').show()" size="15"/>
+                </p>
+                <p class="fieldwrapper">
+                    <label for="last_name">{% trans "Last Name" %}</label>:
+                    <input id="last_name" name="last_name" type="text" value="{{ user.last_name }}"
+             			   onchange="$('#submit_user').show()" size="15"/>
+                    <br/>
+                </p>
+                <p class="fieldwrapper">
+                    <label for="email">Email</label>:
+                    <input id="email" name="email" type="text" value="{{ user.email }}"
+             			   onchange="$('#submit_user').show()"/>
+                </p>
+                <p class="fieldwrapper">
+                    <label for="phone">{% trans "Phone" %}</label>:
+                    <input id="phone" name="phone" type="text" value="{{ user.get_profile.phone }}"
+             			   onchange="$('#submit_user').show()" size="15"/>
+                </p>
+                <p class="fieldwrapper">
+                    <label for="gender">{% trans "Gender" %}</label>:
+                    <select id="gender" name="gender" onchange="$('#submit_user').show()">
+                        <option value="M" {% if user.get_profile.gender = "M" %}selected="selected"{% endif %}>
+                            {% trans "Male" %}
+                        </option>
+                        <option value="F" {% if user.get_profile.gender = "F" %}selected="selected"{% endif %}>
+                            {% trans "Female" %}
+                        </option>
+                    </select>
+                </p>
+                <p>
+                    <input id="submit_user" name="submit_user" type="submit"
+                           value="{% trans "save" %}" class="hidden_submit"/>
+		            <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="user_data_loader"/>
+		            <span class="work_done" id="user_data_done">{% trans "saved" %}</span>
+    		        <br/>
+                </p>
 		        <p class="error" id="user_data_error">
 			        {% trans "All fields are required" %}.
 			        <img src="{{ MEDIA_URL }}image/remove.png" alt="{% trans "close" %}" class="close"
 			         	 onclick="$('#user_data_error').slideUp()"
-                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')"
                          onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
 		        </p>
             </form>
 
             <form id="user_password" action="{% url registration_password %}"
                   method="post" onsubmit="return submitpassword()">
-                <label for="password1">{% trans "New Password" %}</label>:
-                <input id="password1" name="password1" type="password" value="" size="12"
-         			   onchange="$('#submit_password').show()"/>
-                <label for="password2">{% trans "Confirm" %}</label>:
-                <input id="password2" name="password2" type="password" value=""
-         			   onchange="$('#submit_password').show()" size="12"/>
-                <input id="submit_password" name="submit_password" type="submit"
-                       value="{% trans "change password" %}" class="hidden_submit"/>
-		        <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
-		        <spam class="work_done" id="password_done">{% trans "passsword changed" %}</spam>
-			
-		        <br>
+                <p>
+                    <label for="password1">{% trans "New Password" %}</label>:
+                    <input id="password1" name="password1" type="password" value="" size="12"
+             			   onchange="$('#submit_password').show()"/>
+                    <label for="password2">{% trans "Confirm" %}</label>:
+                    <input id="password2" name="password2" type="password" value=""
+             			   onchange="$('#submit_password').show()" size="12"/>
+                    <input id="submit_password" name="submit_password" type="submit"
+                           value="{% trans "change password" %}" class="hidden_submit"/>
+		            <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader" id="password_change_loader"/>
+		            <span class="work_done" id="password_done">{% trans "passsword changed" %}</span>
+    		        <br/>
+		        </p>
 		        <p class="error" id="password_error">
 			        {% trans "Password and confirmation must be non empty and equal" %}.
 			        <img src="{{ MEDIA_URL }}image/remove.png" alt="{% trans "close" %}"
                          class="close" onclick="$('#password_error').slideUp()"
-                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+                         onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')"
                          onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
 		        </p>
-		            
             </form>
         </div>
     </div>

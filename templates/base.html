@@ -1,14 +1,14 @@
-{% spaceless %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html lang="{{ LANGUAGE_CODE }}">
+{% spaceless %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}">
 	<head>
 	    {% block head %}
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="Rodrigo Setti" />
 		<link rel="shortcut icon" href="{{ MEDIA_URL }}image/favicon.ico" type="image/x-icon" />
 		<title>{% block title %}Demolition{% endblock %}</title>
-		<meta name="author" content="Rodrigo Setti">
 	    {% endblock %}
 	</head>
 	<body>

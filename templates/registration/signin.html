@@ -6,7 +6,7 @@
 
 {% block head %}
     {{ block.super }}
-    <link href="{{ MEDIA_URL }}style/signin.css" rel="stylesheet" type="text/css">
+    <link href="{{ MEDIA_URL }}style/signin.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block content %}
@@ -25,9 +25,9 @@
 
             {{ form.as_p }}
 
-            <input type="submit" value="{% trans "sign in" %}" id="submit_signin"/>
+            <p><input type="submit" value="{% trans "sign in" %}" id="submit_signin"/></p>
         </form>
-        <br>
+        <br/>
     </div>
 </div>
 

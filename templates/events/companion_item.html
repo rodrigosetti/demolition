@@ -5,35 +5,46 @@
     <form id="companion_form_{{ companion.id }}" method="post" 
           action="{% url event_save_companion companion.participation.event.slug %}"
           onsubmit="return savecompanion('{% url event_save_companion companion.participation.event.slug %}', {{ companion.id }})">
-        <input type="hidden" name="id" value="{{ companion.id }}"
-               onchange="$('#submit_companion_{{ companion.id }}').show()" />
-        <label for="drinking">{% trans "Drinking" %}</label>:
-        <input name="drinking" type="checkbox" {% if companion.drinking %}checked{% endif %}
-               onchange="$('#submit_companion_{{ companion.id }}').show()" />
-        <select id="gender" name="gender" 
-                onchange="$('#submit_companion_{{ companion.id }}').show()">
-            <option value="M" {% if companion.gender = "M" %}selected{% endif %}>{% trans "Male" %}</option>
-            <option value="F" {% if companion.gender = "F" %}selected{% endif %}>{% trans "Female" %}</option>
-        </select>
+        <p>
+            <input type="hidden" name="id" value="{{ companion.id }}"
+                   onchange="$('#submit_companion_{{ companion.id }}').show()" />
+            <label for="drinking">{% trans "Drinking" %}</label>:
+            <input name="drinking" type="checkbox" 
+                   {% if companion.drinking %}checked="checked"{% endif %}
+                   onchange="$('#submit_companion_{{ companion.id }}').show()" />
+            <select name="gender"
+                    onchange="$('#submit_companion_{{ companion.id }}').show()">
+                <option value="M" 
+                        {% if companion.gender = "M" %}selected="selected"{% endif %}>
+                    {% trans "Male" %}
+                </option>
+                <option value="F" 
+                        {% if companion.gender = "F" %}selected="selected"{% endif %}>
+                    {% trans "Female" %}
+                </option>
+            </select>
 
-        <input type="submit" id="submit_companion_{{ companion.id }}"
-               value="{% trans "save" %}" class="hidden_submit"/>
+            <input type="submit" id="submit_companion_{{ companion.id }}"
+                   value="{% trans "save" %}" class="hidden_submit"/>
+        </p>
     </form>
 
     <form class="remove" method="post" title="{% trans "remove companion" %}"
           action="{% url event_del_companion companion.participation.event.slug %}"
           onsubmit="return deletecompanion('{% url event_del_companion companion.participation.event.slug %}', {{ companion.id }})">
-        <input type="hidden" name="id" value="{{ companion.id }}" />
-        <input type="image" src="{{ MEDIA_URL}}image/remove.png" 
-               name="remove_companion" alt="{% trans "remove" %}" 
-               onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
-               onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
+        <p>
+            <input type="hidden" name="id" value="{{ companion.id }}" />
+            <input type="image" src="{{ MEDIA_URL}}image/remove.png" 
+                   name="remove_companion" alt="{% trans "remove" %}" 
+                   onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')"
+                   onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
+        </p>
     </form>
 
     <img src="{{ MEDIA_URL }}image/loader.gif" alt="" class="loader"
          id="companion_loader_{{ companion.id }}"/>
-    <spam class="work_done" id="companion_done_{{ companion.id }}">
+    <span class="work_done" id="companion_done_{{ companion.id }}">
         {% trans "saved" %}
-    </spam>
+    </span>
 </li>
 {% endspaceless %}

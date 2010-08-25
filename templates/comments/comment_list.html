@@ -4,17 +4,17 @@
 {% for comment in comments reversed %}
     {% if not comment.is_removed %}
     <li id="comment_{{ comment.id }}">
-        <spam class="submit_date">
+        <span class="submit_date">
             {{ comment.submit_date|naturalday }},
             {{ comment.submit_date|time:"H:i" }}
-        </spam>
+        </span>
         <p class="username">{{ comment.user.get_full_name }}:</p>
         <p>{{ comment.comment|linebreaksbr }}</p>
         {% if comment.user == user %}
         <img src="{{ MEDIA_URL}}image/remove.png" title="{% trans "remove comment" %}"
              class="remove" alt="{% trans "remove" %}" 
              onclick="removecomment('{% url comment_del event.slug %}', '{% url comment_get event.slug %}', {{ comment.id }})"
-             onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')" "
+             onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')"
              onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
         {% endif %}
     </li>

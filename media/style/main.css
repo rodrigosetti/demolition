@@ -208,6 +208,10 @@ div#user {
     padding: 20px 0 0 20px;
 }
 
+#user_data p.fieldwrapper {
+    display: inline;
+}
+
 input[type=image] {
     vertical-align: middle;
 }
@@ -227,13 +231,18 @@ input[type=image] {
 .error {
     margin: 10px;
     color: black;
-    font-size: 80%;
+    font-size: 12px;
     background-color: #f66;
-    vertical-align: middle;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     padding-left: 10px;
+    position: relative;
     height: 24px;
+}
+
+.error .close {
+    position: absolute;
+    right: 10px;
 }
 
 .close, .remove {
@@ -328,7 +337,7 @@ ul#events li a.selected {
    margin: 10px 0 10px 0;
 }
 
-#companions li form {
+#companions li form, #companions li form p {
     display: inline;
 }
 

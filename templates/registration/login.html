@@ -6,7 +6,7 @@
 
 {% block head %}
     {{ block.super }}
-    <link href="{{ MEDIA_URL }}style/login.css" rel="stylesheet" type="text/css">
+    <link href="{{ MEDIA_URL }}style/login.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block content %}
@@ -14,19 +14,24 @@
 <div id="login">
     <form id="login_form" method="post" action="{% url django.contrib.auth.views.login %}">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}" />
-
-        {{ form.username.label_tag }}
-        {{ form.username }}
-        <br>
-        {{ form.password.label_tag }}
-        {{ form.password }}
-        <br>
-        <input type="submit" value="{% trans "log in" %}" id="submit_login"/>
-        <a href="{% url registration_signin %}" title="{% trans "sign in" %}"
-           class="button" id="signin">
-            {% trans "sign in" %}
-        </a>
+        <p><input type="hidden" name="next" value="{{ next }}" /></p>
+        <p>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            <br/>
+        </p>
+        <p>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            <br/>
+        </p>
+        <p>
+            <input type="submit" value="{% trans "log in" %}" id="submit_login" />
+            <a href="{% url registration_signin %}" title="{% trans "sign in" %}"
+               class="button" id="signin">
+                {% trans "sign in" %}
+            </a>
+        </p>
     </form>
     {% if form.errors %}
     <br>

@@ -47,7 +47,7 @@ urlpatterns = patterns('',
     # list user-data and participations tabs
     url(r'^events/$', 'events.views.main', name="event_main"),
 
-    # used for DEBUG only, to generate the js for main which will be used statically
+    # Generate the js for main which will be used statically
     url(r'events/main.js', 'django.views.generic.simple.direct_to_template', 
         {'template': 'events/main.js', 'mimetype': 'text/javascript'},
         name="main_javascript"),
@@ -60,9 +60,11 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 )
 
-# Static file serving: no need for another web-server inn DEBUG mode
+# Debug mode URLS
 if settings.DEBUG:
     urlpatterns += patterns('',
+
+        # Static file serving: no need for another web-server inn DEBUG mode
         (r'^demolition-media/(?P<path>.*)$', 'django.views.static.serve', 
          {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     )

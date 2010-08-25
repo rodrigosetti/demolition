@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.template import RequestContext
 from views_post import update_charge
-from settings import MAIN_JS_URL
+from django.conf import settings
 from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 
@@ -16,7 +16,7 @@ def main(request, event_slug=None):
     where heavy ajax functionality must be used to integrate user data,
     events tabs and participation pages
     """
-    context = {"user": request.user, "MAIN_JS_URL": MAIN_JS_URL,
+    context = {"user": request.user, "MAIN_JS_URL": settings.MAIN_JS_URL,
                "events": Event.objects.all()};
 
     # if there is not an explicit event, try to get one

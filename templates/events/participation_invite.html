@@ -11,11 +11,11 @@
         {% trans "Request an invitation now" %}
     </button>
 
-    <img style="display:none" src="{{ MEDIA_URL }}image/loader.gif" alt="" 
+    <img src="{{ MEDIA_URL }}image/loader.gif" alt="" 
 	     class="loader" id="invitation_loader"/>
 
-    <spam style="display:none" class="work_done" id="invitation_done">
+    <span class="work_done" id="invitation_done">
 	    {% trans "Invitation requested, please wait for approval" %}
-    </spam>
+    </span>
 </div>
 {% endspaceless %}

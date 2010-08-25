@@ -165,7 +165,7 @@ input[type=text]:hover, input[type=password]:hover {
 }
 
 
-input[type=submit], .button  {
+input[type=submit], button  {
     background: url(../image/button-bg.png) repeat-x top center;
     border: 1px solid #999;
     -moz-border-radius: 5px;
@@ -175,9 +175,14 @@ input[type=submit], .button  {
     font-size: 13px;
     text-decoration: none;
     padding: 0 3px 0 3px;
+    cursor: pointer;
 }
 
-input[type=submit]:hover, .button:hover {
+button {
+    background: url(../image/button-bg-2.png) repeat-x top center;
+}
+
+input[type=submit]:hover, button:hover {
     background: white;
 }
 

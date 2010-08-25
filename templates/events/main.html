@@ -214,9 +214,7 @@
         {% endcomment %}
         function loadparticipation(post_url) {
 
-            $('#participation').html(
-                '<img src="{{ MEDIA_URL }}image/loader.gif" class="loader" id="participation_loading" alt="">'
-            );
+            $('#participation').html('<img src="{{ MEDIA_URL }}image/loader.gif">');
             $('#participation').load(post_url, function() {
                 $('#participation .hidden_submit, #event_info').hide();
             });

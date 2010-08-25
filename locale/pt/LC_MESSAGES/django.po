@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: demolition 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-24 19:47+0000\n"
+"POT-Creation-Date: 2010-08-25 01:41+0000\n"
 "PO-Revision-Date: 2010-08-24 16:15+3\n"
 "Last-Translator: Rodrigo Setti <rodrigosetti@gmail.com>\n"
 "Language-Team: pt-br <rodrigosetti@gmail.com>\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: events/admin.py:14
-#, fuzzy
 msgid "Charge Structure"
-msgstr "Valor cobrado"
+msgstr "Estrutura de cobrança"
 
 #: events/models.py:11
 msgid "Users are allow to select only confirmed dates"
@@ -46,80 +45,80 @@ msgid "Possible dates"
 msgstr "Datas possíveis"
 
 #: events/models.py:49 templates/events/companion_item.html:15
-#: templates/events/main.html:394
+#: templates/events/main.html:393
 msgid "Male"
 msgstr "Homem"
 
 #: events/models.py:50 templates/events/companion_item.html:16
-#: templates/events/main.html:397
+#: templates/events/main.html:396
 msgid "Female"
 msgstr "Mulher"
 
-#: events/models.py:61
+#: events/models.py:64
 msgid "Person"
 msgstr "Pessoa"
 
-#: events/models.py:62
+#: events/models.py:65
 msgid "Persons"
 msgstr "Pessoas"
 
-#: events/models.py:71
+#: events/models.py:73
 msgid "Person plans to drink at event"
 msgstr "Pessoa pretende beber no evento"
 
-#: events/models.py:72
+#: events/models.py:74
 msgid "Person manages to get there"
 msgstr "A pessoa tem meios de chegar"
 
-#: events/models.py:73
+#: events/models.py:75
 msgid "Person can offer ride to the event's place"
 msgstr "Pode oferecer carona"
 
-#: events/models.py:75
+#: events/models.py:77
 msgid "Person can join event"
 msgstr "Pessoa pode participar do evento"
 
-#: events/models.py:77
+#: events/models.py:79
 msgid "The participation is paid"
 msgstr "Pagamento confirmado"
 
-#: events/models.py:80
+#: events/models.py:85
 msgid "Participation"
 msgstr "Participação"
 
-#: events/models.py:81
+#: events/models.py:86
 msgid "Participations"
 msgstr "Participações"
 
-#: events/models.py:94
+#: events/models.py:98
 msgid "Confirmed date"
 msgstr "Data confirmada"
 
-#: events/models.py:95 templates/events/participation.html:22
+#: events/models.py:99 templates/events/participation.html:22
 msgid "Confirmed dates"
 msgstr "Datas confirmadas"
 
-#: events/models.py:105
+#: events/models.py:109
 msgid "Companion plans to drink at event"
 msgstr "Companhia pretende beber no evento"
 
-#: events/models.py:108
-msgid "Companion"
-msgstr "Acompanhante"
-
-#: events/models.py:109
-msgid "Companions"
-msgstr "Acompanhantes"
-
-#: events/models.py:110
+#: events/models.py:112
 msgid "drinking"
 msgstr "Bebe"
 
-#: registration/forms.py:9 templates/events/main.html:378
+#: events/models.py:116
+msgid "Companion"
+msgstr "Acompanhante"
+
+#: events/models.py:117
+msgid "Companions"
+msgstr "Acompanhantes"
+
+#: registration/forms.py:9 templates/events/main.html:377
 msgid "First Name"
 msgstr "Nome"
 
-#: registration/forms.py:10 templates/events/main.html:381
+#: registration/forms.py:10 templates/events/main.html:380
 msgid "Last Name"
 msgstr "Sobrenome"
 
@@ -127,7 +126,7 @@ msgstr "Sobrenome"
 msgid "Username"
 msgstr "Usuário"
 
-#: registration/forms.py:13 templates/events/main.html:388
+#: registration/forms.py:13 templates/events/main.html:387
 msgid "Phone"
 msgstr "Fone"
 
@@ -139,7 +138,7 @@ msgstr "Senha"
 msgid "Confirmation"
 msgstr "Confirmação"
 
-#: registration/forms.py:16 templates/events/main.html:391
+#: registration/forms.py:16 templates/events/main.html:390
 msgid "Gender"
 msgstr "Gênero"
 
@@ -161,7 +160,7 @@ msgstr "Senha e confirmação devem ser idênticas"
 msgid "Drinking"
 msgstr "Bebe"
 
-#: templates/events/companion_item.html:20 templates/events/main.html:401
+#: templates/events/companion_item.html:20 templates/events/main.html:400
 #: templates/events/participation.html:54
 #: templates/events/participation.html:77
 #: templates/events/participation.html:107
@@ -172,44 +171,48 @@ msgstr "salvar"
 msgid "remove"
 msgstr "remover"
 
-#: templates/events/companion_item.html:36 templates/events/main.html:403
+#: templates/events/companion_item.html:36 templates/events/main.html:402
 #: templates/events/participation.html:57
 #: templates/events/participation.html:80
 #: templates/events/participation.html:109
 msgid "saved"
 msgstr "salvo"
 
-#: templates/events/main.html:370 templates/events/main.html.py:371
+#: templates/events/main.html:369 templates/events/main.html.py:370
 msgid "log out"
 msgstr "sair"
 
-#: templates/events/main.html:407
+#: templates/events/main.html:406
 msgid "All fields are required"
 msgstr "Todos os campos são requeridos"
 
-#: templates/events/main.html:408 templates/events/main.html.py:431
+#: templates/events/main.html:407 templates/events/main.html.py:430
 msgid "close"
 msgstr "fechar"
 
-#: templates/events/main.html:417
+#: templates/events/main.html:416
 msgid "New Password"
 msgstr "Nova senha"
 
-#: templates/events/main.html:420
+#: templates/events/main.html:419
 msgid "Confirm"
 msgstr "Confirmação"
 
-#: templates/events/main.html:424
+#: templates/events/main.html:423
 msgid "change password"
 msgstr "alterar senha"
 
-#: templates/events/main.html:426
+#: templates/events/main.html:425
 msgid "passsword changed"
 msgstr "senha alterada"
 
-#: templates/events/main.html:430
+#: templates/events/main.html:429
 msgid "Password and confirmation must be non empty and equal"
 msgstr "Senha e confirmação devem ser iguais e não podems ser vazias"
+
+#: templates/events/main.html:464
+msgid "Please submit bugs to"
+msgstr "Por favor submeta bugs para"
 
 #: templates/events/participation.html:9
 msgid "Event Information"
@@ -243,7 +246,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"Por favor não adicione acompanhantes que já estão cadastradas e convidadas "
+"Por favor não adicione acompanhantes que já estão cadastrados e convidados "
 "para o mesmo evento"
 
 #: templates/events/participation.html:127
@@ -286,7 +289,7 @@ msgid "log in"
 msgstr "entrar"
 
 #: templates/registration/login.html:26 templates/registration/login.html:28
-#: templates/registration/signin.html:30
+#: templates/registration/signin.html:28
 msgid "sign in"
 msgstr "cadastrar"
 
@@ -294,14 +297,14 @@ msgstr "cadastrar"
 msgid "Your username and password didn't match. Please try again"
 msgstr "Seu nome de usuário ou senha não batem. Por favor tente novamente"
 
-#: templates/registration/signin.html:19
+#: templates/registration/signin.html:17
 msgid "Sign in"
 msgstr "Cadastrar"
 
-#: templates/registration/signin.html:20
+#: templates/registration/signin.html:18
 msgid "back to log in page"
 msgstr "voltar para a página de entrada"
 
-#: templates/registration/signin.html:21
+#: templates/registration/signin.html:19
 msgid "back to log in"
 msgstr "voltar para entrada"

@@ -116,6 +116,22 @@ body {
     height: 100%;
 }
 
+#content-top {
+    background: url(../image/content-top.png) no-repeat #d3d3d3;
+    margin: 0 auto 0 auto;
+    width: 800px;
+    height: 40px;
+}
+
+
+#content-bottom {
+    background: url(../image/content-bottom.png) no-repeat #d3d3d3;
+    margin: 0 auto 0 auto;
+    width: 800px;
+    height: 40px;
+    position: relative;
+}
+
 #content {
     background: url(../image/content-bg.png) repeat-y #c1d4e5;
     width: 746px;
@@ -133,10 +149,9 @@ body {
 #footnote {
     text-align: center;
     font-size: 12px;
-    padding-bottom: 5px;
     color: #606060;
     position:absolute;
-    bottom:0;
+    bottom: 15px; 
     width:100%;
 }
 
@@ -211,7 +226,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 }
 
 div#user {
-    padding: 60px 20px 20px 0;
+    padding: 0 20px 20px 0;
 }
 
 #user_forms form {

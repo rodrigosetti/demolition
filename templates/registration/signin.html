@@ -11,6 +11,8 @@
 
 {% block content %}
 
+<div id="content-top"></div>
+
 <div id="content">
     <div id="signin">
         <div id="header">
@@ -29,6 +31,14 @@
         </form>
         <br/>
     </div>
+</div>
+
+<div id="content-bottom">
+    <p id="footnote">
+        Demolition &copy; 2010 Rodrigo Setti - 
+        {% trans "Please submit bugs to" %}
+        <a href="mailto:rodrigosetti@gmail.com">rodrigosetti@gmail.com</a>
+    </p>
 </div>
 
 {% endblock %}

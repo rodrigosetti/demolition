@@ -16,6 +16,23 @@ body {
     height: 100%;
 }
 
+#content-top {
+    background: url(../image/content-top.png) no-repeat #d3d3d3;
+    margin: 0 auto 0 auto;
+    width: 800px;
+    height: 40px;
+}
+
+
+#content-bottom {
+    background: url(../image/content-bottom.png) no-repeat #d3d3d3;
+    margin: 0 auto 0 auto;
+    width: 800px;
+    height: 40px;
+    position: relative;
+}
+
+
 #content {
     background: url(../image/content-bg.png) repeat-y #c1d4e5;
     width: 746px;
@@ -49,12 +66,8 @@ form#signin_form {
     margin: 0 auto 0 auto;
 }
 
-#signin {
-    padding-top: 20px;
-}
-
 #header {
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     margin-left: 20px;
 }
 
@@ -87,3 +100,17 @@ form#signin_form {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
+
+#footnote {
+    text-align: center;
+    font-size: 12px;
+    color: #606060;
+    position:absolute;
+    bottom: 15px; 
+    width:100%;
+}
+
+#footnote a {
+    color: #606060;
+}
+

@@ -58,7 +58,7 @@ class Person(models.Model):
     phone = models.CharField(max_length=20, blank=True)
 
     def __unicode__(self):
-        return self.user.username
+        return self.user.get_full_name()
 
     class Meta:
         verbose_name = _(u"Person")

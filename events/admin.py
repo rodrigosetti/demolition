@@ -6,7 +6,8 @@ class PossibleDateInline(admin.TabularInline):
     model = PossibleDate
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ("title", "confirmed")
+    list_display = ("title", "confirmed", "needs_ride")
+    list_filter = ("title", "confirmed", "needs_ride")
     fieldsets = (
         (None, {
             'fields': ('title', 'slug', 'info',  'confirmed', 'needs_ride'),
@@ -27,11 +28,15 @@ class CompanionsInline(admin.TabularInline):
     model = Companion
 
 class ParticipationAdmin(admin.ModelAdmin):
-    list_display = ("event", "person", "accepted", "paid")
-    list_filter = ("event", "person", "accepted", "paid") 
+    list_display = ("person", "event", "accepted", "paid", "charge", 
+                    "drinking", "self_transportation", "offer_ride")
+    list_filter = ("event", "accepted", "paid",
+                   "drinking", "self_transportation", "offer_ride") 
     inlines = [ ConfirmedDateInline, CompanionsInline, ]
 
 class PersonAdmin(admin.ModelAdmin):
+    list_filter = ("gender",) 
+    list_display = ("user", "gender", "phone")
     radio_fields = {"gender": admin.VERTICAL}
     
 admin.site.register(Person, PersonAdmin)

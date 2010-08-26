@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: demolition 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-26 18:04+0000\n"
+"POT-Creation-Date: 2010-08-26 21:20+0000\n"
 "PO-Revision-Date: 2010-08-24 16:15+3\n"
 "Last-Translator: Rodrigo Setti <rodrigosetti@gmail.com>\n"
 "Language-Team: pt-br <rodrigosetti@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: events/admin.py:14
+#: events/admin.py:15
 msgid "Charge Structure"
 msgstr "Estrutura de cobrança"
 
@@ -45,12 +45,12 @@ msgid "Possible dates"
 msgstr "Datas possíveis"
 
 #: events/models.py:49 templates/events/companion_item.html:19
-#: templates/events/main.html:62
+#: templates/events/main.html:64
 msgid "Male"
 msgstr "Homem"
 
 #: events/models.py:50 templates/events/companion_item.html:23
-#: templates/events/main.html:65
+#: templates/events/main.html:67
 msgid "Female"
 msgstr "Mulher"
 
@@ -114,11 +114,11 @@ msgstr "Acompanhante"
 msgid "Companions"
 msgstr "Acompanhantes"
 
-#: registration/forms.py:9 templates/events/main.html:38
+#: registration/forms.py:9 templates/events/main.html:40
 msgid "First Name"
 msgstr "Nome"
 
-#: registration/forms.py:10 templates/events/main.html:43
+#: registration/forms.py:10 templates/events/main.html:45
 msgid "Last Name"
 msgstr "Sobrenome"
 
@@ -126,7 +126,7 @@ msgstr "Sobrenome"
 msgid "Username"
 msgstr "Usuário"
 
-#: registration/forms.py:13 templates/events/main.html:54
+#: registration/forms.py:13 templates/events/main.html:56
 msgid "Phone"
 msgstr "Fone"
 
@@ -138,7 +138,7 @@ msgstr "Senha"
 msgid "Confirmation"
 msgstr "Confirmação"
 
-#: registration/forms.py:16 templates/events/main.html:59
+#: registration/forms.py:16 templates/events/main.html:61
 msgid "Gender"
 msgstr "Gênero"
 
@@ -154,6 +154,14 @@ msgstr "Por favor especifique uma senha com no mínimo quatro letras"
 #: registration/forms.py:43
 msgid "password and confirmation does not match"
 msgstr "Senha e confirmação devem ser idênticas"
+
+#: templates/admin/base_site.html:4
+msgid "Demolition site admin"
+msgstr "Administração do Demolition"
+
+#: templates/admin/base_site.html:7
+msgid "Demolition Administration"
+msgstr "Administração do Demolition"
 
 #: templates/comments/comment_list.html:14
 msgid "remove comment"
@@ -173,7 +181,7 @@ msgstr "Nenhum comentário"
 msgid "Drinking"
 msgstr "Bebe"
 
-#: templates/events/companion_item.html:28 templates/events/main.html:71
+#: templates/events/companion_item.html:28 templates/events/main.html:73
 #: templates/events/participation.html:70
 #: templates/events/participation.html:97
 #: templates/events/participation.html:129
@@ -184,46 +192,46 @@ msgstr "salvar"
 msgid "remove companion"
 msgstr "remover acompanhante"
 
-#: templates/events/companion_item.html:47 templates/events/main.html:73
+#: templates/events/companion_item.html:47 templates/events/main.html:75
 #: templates/events/participation.html:73
 #: templates/events/participation.html:100
 #: templates/events/participation.html:131
 msgid "saved"
 msgstr "salvo"
 
-#: templates/events/main.html:29 templates/events/main.html.py:30
+#: templates/events/main.html:31 templates/events/main.html.py:32
 msgid "log out"
 msgstr "sair"
 
-#: templates/events/main.html:77
+#: templates/events/main.html:79
 msgid "All fields are required"
 msgstr "Todos os campos são requeridos"
 
-#: templates/events/main.html:78 templates/events/main.html.py:102
+#: templates/events/main.html:80 templates/events/main.html.py:104
 msgid "close"
 msgstr "fechar"
 
-#: templates/events/main.html:88
+#: templates/events/main.html:90
 msgid "New Password"
 msgstr "Nova senha"
 
-#: templates/events/main.html:91
+#: templates/events/main.html:93
 msgid "Confirm"
 msgstr "Confirmação"
 
-#: templates/events/main.html:95
+#: templates/events/main.html:97
 msgid "change password"
 msgstr "alterar senha"
 
-#: templates/events/main.html:97
+#: templates/events/main.html:99
 msgid "passsword changed"
 msgstr "senha alterada"
 
-#: templates/events/main.html:101
+#: templates/events/main.html:103
 msgid "Password and confirmation must be non empty and equal"
 msgstr "Senha e confirmação devem ser iguais e não podems ser vazias"
 
-#: templates/events/main.html:135
+#: templates/events/main.html:140 templates/registration/signin.html:39
 msgid "Please submit bugs to"
 msgstr "Por favor submeta bugs para"
 
@@ -326,7 +334,7 @@ msgid "log in"
 msgstr "entrar"
 
 #: templates/registration/login.html:30 templates/registration/login.html:32
-#: templates/registration/signin.html:28
+#: templates/registration/signin.html:30
 msgid "sign in"
 msgstr "cadastrar"
 
@@ -334,14 +342,14 @@ msgstr "cadastrar"
 msgid "Your username and password didn't match. Please try again"
 msgstr "Seu nome de usuário ou senha não batem. Por favor tente novamente"
 
-#: templates/registration/signin.html:17
+#: templates/registration/signin.html:19
 msgid "Sign in"
 msgstr "Cadastrar"
 
-#: templates/registration/signin.html:18
+#: templates/registration/signin.html:20
 msgid "back to log in page"
 msgstr "voltar para a página de entrada"
 
-#: templates/registration/signin.html:19
+#: templates/registration/signin.html:21
 msgid "back to log in"
 msgstr "voltar para entrada"

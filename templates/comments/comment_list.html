@@ -8,7 +8,7 @@
             {{ comment.submit_date|naturalday }},
             {{ comment.submit_date|time:"H:i" }}
         </span>
-        <p class="username">{{ comment.user.get_full_name }}:</p>
+        <p class="username">{{ comment.user.first_name|lower|capfirst }} {{ comment.user.last_name|lower|capfirst }}:</p>
         <p>{{ comment.comment|linebreaksbr }}</p>
         {% if comment.user == user %}
         <img src="{{ MEDIA_URL}}image/remove.png" title="{% trans "remove comment" %}"

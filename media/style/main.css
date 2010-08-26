@@ -186,7 +186,18 @@ input[type=submit]:hover, button:hover, .button:hover {
     background: white;
 }
 
-#collapse_edit {
+#logout {
+    background: url(../image/button-bg-2.png) repeat-x top center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#logout:hover {
+    background: white;
+}
+
+.collapse {
     cursor: pointer;
 }
 
@@ -197,12 +208,6 @@ input[type=submit]:hover, button:hover, .button:hover {
 
 #user_head img{
     vertical-align: -2px;
-}
-
-#logout {
-    position: absolute;
-    right: 0;
-    bottom: 0;
 }
 
 div#user {
@@ -327,9 +332,23 @@ ul#events li a.selected {
     display: inline;
 }
 
+#dates li {
+    position: relative;
+}
+
+.datechecks {
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+}
+
 #preferences {
     margin: 10px 0 10px 0;
     padding: 10px 0 10px 5px;
+}
+
+#preferences p {
+    display: inline;
 }
 
 #companions_edit {

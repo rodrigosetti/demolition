@@ -100,15 +100,32 @@ def participation_details(request, event_slug, is_ajax=False):
                 # update charges case event is confirmed
                 if event.confirmed: update_charge(participation)
 
-                # load dates
-                dates = [ (date, ConfirmedDate.objects.filter(participation=participation, date=date).exists()) for
-                           date in PossibleDate.objects.filter(event=event) ]
-               
+                # count number of participations and number of persons
+                participations_count = persons_count = 0;
+                for p in list(Participation.objects.filter(event=event, accepted=True)):
+                    participations_count += 1
+                    persons_count += 1 + Companion.objects.filter(participation=p).count()
+
+                # load dates tuple:
+                # possible-date; user has checked(confirmed) date?; 
+                # user count which has also checked(confirmed) date
+                dates = [ ( date,
+                            ConfirmedDate.objects.filter(participation = participation, 
+                                                         date = date).exists(),
+                            ConfirmedDate.objects.filter(participation__event = event, 
+                                                         participation__accepted = True,
+                                                         date = date).count() 
+                                * 100. / participations_count )
+                           for date in PossibleDate.objects.filter(event=event) ]              
+
                 return render_to_response("events/participation.html", 
                                           {"participation": participation,
                                            "event": event,
                                            "dates": dates,
-                                           "companions": Companion.objects.filter(participation=participation)},
+                                           "participations_count": participations_count,
+                                           "persons_count" : persons_count,
+                                           "companions": 
+                                                Companion.objects.filter(participation=participation)},
                                            context_instance=RequestContext(request))
             else:
                 # render a page waiting for acceptance

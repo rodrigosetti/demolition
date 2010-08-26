@@ -5,11 +5,20 @@
 
 {% spaceless %}
 
+<p>
+    {{ participations_count|apnumber|capfirst }}
+    {% trans "participating" %}{{ participations_count|pluralize }}
+    {% if persons_count > participations_count %}
+        ({{ persons_count|apnumber }} {% trans "counting companions" %})
+    {% endif %}
+</p>
+<br/>
+
 {% if event.info %}
     <p>
     	{% trans "Event Information" %}
         <img src="{{ MEDIA_URL }}image/plus.gif" alt="+" id="collapse_event_info"
-                 onclick="return toggleeventinfo()"/>
+             class="collapse" onclick="return toggleeventinfo()"/>
     </p>
     <div id="event_info" class="markdown">
         {{ event.info|markdown }}
@@ -22,13 +31,16 @@
     {% if participation.paid %}
     <p>{% trans "Confirmed dates" %}:</p>
     <ul id="confirmed_dates">
-        {% for day, ok in possible_dates %}
+        {% for day, ok, percentage in possible_dates %}
             {% if day.confirmed %}
             <li>
                 {{ day.date|naturalday }}
                 {%if ok %}
                 <img src="{{ MEDIA_URL }}image/tick.gif" alt="{% trans "OK" %}" />
                 {% endif %}
+                <span class="datechecks">
+                    {{ percentage|floatformat:-1 }}&#37;
+                </span>
             </li>
             {%endif%}
         {% endfor %}
@@ -41,13 +53,16 @@
           action="{% url event_save_dates event.slug %}"
           onsubmit="return savedates('{% url event_save_dates event.slug %}')">
         <ul id="dates">
-            {% for day, ok in dates %}
+            {% for day, ok, percentage in dates %}
                 {% if day.confirmed %}
                 <li>
                     <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
                     <input id="date_{{ day.id }}" name="date_{{ day.id }}" 
                            type="checkbox" {%if ok %}checked="checked"{% endif %}
                            onchange="$('#submit_dates').show()"/>
+                    <span class="datechecks">
+                        {{ percentage|floatformat:-1 }}&#37;
+                    </span>
                 </li>
                 {% endif %}
             {% endfor %}
@@ -66,12 +81,15 @@
           action="{% url event_save_dates event.slug %}"
           onsubmit="return savedates('{% url event_save_dates event.slug %}')">
         <ul id="dates">
-            {% for day, ok in dates %}
+            {% for day, ok, percentage in dates %}
             <li>
                 <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
                 <input id="date_{{ day.id }}" name="date_{{ date.id }}"
                        type="checkbox" {%if ok %}checked="checked"{% endif %}
                        onchange="$('#submit_dates').show()"/>
+                <span class="datechecks">
+                    {{ percentage|floatformat:-1 }}&#37;
+                </span>
             </li>
             {% endfor %}
         </ul>

@@ -60,7 +60,7 @@ input {
     font-family: Georgia, serif;
 }
 
-form#signin_form {
+form#signup_form {
     width: 400px;
     text-align: left;
     margin: 0 auto 0 auto;
@@ -71,7 +71,7 @@ form#signin_form {
     margin-left: 20px;
 }
 
-#submit_signin {
+#submit_signup {
     margin-top: 40px;
     background: url(../image/button-bg-2.png) repeat-x top center;
     border: 1px solid #999;
@@ -87,7 +87,7 @@ form#signin_form {
     cursor: pointer;
 }
 
-#submit_signin:hover	{
+#submit_signup:hover	{
     background: white;
     color: black;
 }

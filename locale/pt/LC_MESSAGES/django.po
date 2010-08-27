@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: demolition 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-26 21:20+0000\n"
+"POT-Creation-Date: 2010-08-27 19:25+0000\n"
 "PO-Revision-Date: 2010-08-24 16:15+3\n"
 "Last-Translator: Rodrigo Setti <rodrigosetti@gmail.com>\n"
 "Language-Team: pt-br <rodrigosetti@gmail.com>\n"
@@ -231,7 +231,7 @@ msgstr "senha alterada"
 msgid "Password and confirmation must be non empty and equal"
 msgstr "Senha e confirmação devem ser iguais e não podems ser vazias"
 
-#: templates/events/main.html:140 templates/registration/signin.html:39
+#: templates/events/main.html:140 templates/registration/signup.html:39
 msgid "Please submit bugs to"
 msgstr "Por favor submeta bugs para"
 
@@ -334,22 +334,25 @@ msgid "log in"
 msgstr "entrar"
 
 #: templates/registration/login.html:30 templates/registration/login.html:32
-#: templates/registration/signin.html:30
-msgid "sign in"
+#: templates/registration/signup.html:30
+msgid "sign up"
 msgstr "cadastrar"
 
 #: templates/registration/login.html:39
 msgid "Your username and password didn't match. Please try again"
 msgstr "Seu nome de usuário ou senha não batem. Por favor tente novamente"
 
-#: templates/registration/signin.html:19
-msgid "Sign in"
+#: templates/registration/signup.html:19
+msgid "Sign up"
 msgstr "Cadastrar"
 
-#: templates/registration/signin.html:20
+#: templates/registration/signup.html:20
 msgid "back to log in page"
 msgstr "voltar para a página de entrada"
 
-#: templates/registration/signin.html:21
+#: templates/registration/signup.html:21
 msgid "back to log in"
 msgstr "voltar para entrada"
+
+#~ msgid "sign in"
+#~ msgstr "cadastrar"

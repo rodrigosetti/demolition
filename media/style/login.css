@@ -29,12 +29,12 @@ input[type=checkbox]{ width: 20px; margin: 0; display: inline-block; }
     float: right;
 }
 
-#signin {
+#signup {
     background: url(../image/button-bg-2.png) repeat-x top center;
     float: left;
 }
 					  
-#submit_login, #signin  {    
+#submit_login, #signup  {    
     border: 1px solid #999;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -48,7 +48,7 @@ input[type=checkbox]{ width: 20px; margin: 0; display: inline-block; }
     cursor: pointer;
 }
 
-#submit_login:hover, #signin:hover	{
+#submit_login:hover, #signup:hover	{
     background: white;
     color: black;
 }

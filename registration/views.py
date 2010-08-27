@@ -55,14 +55,14 @@ def password_change(request):
     else:
         return HttpResponseBadRequest()
 
-def signin(request):
-    "render a signin page and handle POST request"
+def signup(request):
+    "render a signup page and handle POST request"
     
     if request.method == "GET":
         # render a registration form
         form = PersonForm()
 
-        return render_to_response("registration/signin.html", 
+        return render_to_response("registration/signup.html", 
                                   {"form": form},
                                   context_instance=RequestContext(request))
 
@@ -97,7 +97,7 @@ def signin(request):
 
         else:
             # display form with validation errors
-            return render_to_response("registration/signin.html", 
+            return render_to_response("registration/signup.html", 
                           {"form": form},
                           context_instance=RequestContext(request))
 

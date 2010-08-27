@@ -6,7 +6,7 @@
 
 {% block head %}
     {{ block.super }}
-    <link href="{{ MEDIA_URL }}style/signin.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ MEDIA_URL }}style/signup.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block content %}
@@ -16,18 +16,18 @@
 <div id="content">
     <div id="signin">
         <div id="header">
-            <h1>{% trans "Sign in" %}</h1>
+            <h1>{% trans "Sign up" %}</h1>
             <a href="{% url registration_login %}" title="{% trans "back to log in page" %}">
                 {% trans "back to log in" %}
             </a>
         </div>
 
-        <form id="signin_form" method="post" action="{% url registration_signin %}">
+        <form id="signup_form" method="post" action="{% url registration_signup %}">
             {% csrf_token %}
 
             {{ form.as_p }}
 
-            <p><input type="submit" value="{% trans "sign in" %}" id="submit_signin"/></p>
+            <p><input type="submit" value="{% trans "sign up" %}" id="submit_signup"/></p>
         </form>
         <br/>
     </div>

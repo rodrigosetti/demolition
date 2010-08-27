@@ -8,9 +8,9 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', 
         name="registration_logout"),
 
-    # sign in page
-    url(r'^signin/$', 'registration.views.signin', 
-        name="registration_signin"),
+    # sign up page
+    url(r'^signup/$', 'registration.views.signup', 
+        name="registration_signup"),
 
     # saves user data(POST)
     url(r'^save/$', 'registration.views.account_save', 

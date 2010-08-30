@@ -59,7 +59,7 @@
                     <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
                     <input id="date_{{ day.id }}" name="date_{{ day.id }}" 
                            type="checkbox" {%if ok %}checked="checked"{% endif %}
-                           onchange="$('#submit_dates').show()"/>
+                           onchange="$('#submit_dates').show();$('#dates_done').hide()"/>
                     <span class="datechecks">
                         {{ percentage|floatformat:-1 }}&#37;
                     </span>
@@ -86,7 +86,7 @@
                 <label for="date_{{ day.id }}">{{ day.date|naturalday }}</label>
                 <input id="date_{{ day.id }}" name="date_{{ date.id }}"
                        type="checkbox" {%if ok %}checked="checked"{% endif %}
-                       onchange="$('#submit_dates').show()"/>
+                       onchange="$('#submit_dates').show();$('#dates_done').hide()"/>
                 <span class="datechecks">
                     {{ percentage|floatformat:-1 }}&#37;
                 </span>
@@ -111,17 +111,17 @@
         <label for="drinking">{% trans "Drinking" %}</label>:
         <input id="drinking" name="drinking" type="checkbox"
                {% if participation.drinking %}checked="checked"{% endif %}
-               onchange="$('#submit_prefs').show()"/>
+               onchange="$('#submit_prefs').show();$('#prefs_done').hide()"/>
 
         {% if event.needs_ride %}
         <label for="self_transportation">{% trans "Self transportation" %}</label>:
         <input id="self_transportation" name="self_transportation" type="checkbox"
                {% if participation.self_transportation %}checked="checked"{% endif %}
-               onchange="$('#submit_prefs').show()"/>
+               onchange="$('#submit_prefs').show();$('#prefs_done').hide()"/>
         <label for="offer_ride">{% trans "Offer Ride" %}</label>:
         <input id="offer_ride" name="offer_ride" type="checkbox"
                {% if participation.offer_ride %}checked="checked"{% endif %}
-               onchange="$('#submit_prefs').show()"/>
+               onchange="$('#submit_prefs').show();$('#prefs_done').hide()"/>
         {% endif %}
     </p>
     <p>

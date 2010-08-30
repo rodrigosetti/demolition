@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load i18n %} 
+{% load names_extra %} 
 
 {% for comment in comments reversed %}
     {% if not comment.is_removed %}
@@ -8,8 +9,8 @@
             {{ comment.submit_date|naturalday }},
             {{ comment.submit_date|time:"H:i" }}
         </span>
-        <p class="username">{{ comment.user.first_name|lower|capfirst }} {{ comment.user.last_name|lower|capfirst }}:</p>
-        <p>{{ comment.comment|linebreaksbr }}</p>
+        <p class="username">{{ comment.user.first_name|capsname }} {{ comment.user.last_name|capsname }}:</p>
+        <p>{{ comment.comment|urlize|linebreaksbr}}</p>
         {% if comment.user == user %}
         <img src="{{ MEDIA_URL}}image/remove.png" title="{% trans "remove comment" %}"
              class="remove" alt="{% trans "remove" %}" 

@@ -7,13 +7,13 @@
           onsubmit="return savecompanion('{% url event_save_companion companion.participation.event.slug %}', {{ companion.id }})">
         <p>
             <input type="hidden" name="id" value="{{ companion.id }}"
-                   onchange="$('#submit_companion_{{ companion.id }}').show()" />
+                   onchange="$('#submit_companion_{{ companion.id }}').show();$('#companion_done_{{ companion.id }}').hide()" />
             <label for="drinking">{% trans "Drinking" %}</label>:
             <input name="drinking" type="checkbox" 
                    {% if companion.drinking %}checked="checked"{% endif %}
-                   onchange="$('#submit_companion_{{ companion.id }}').show()" />
+                   onchange="$('#submit_companion_{{ companion.id }}').show();$('#companion_done_{{ companion.id }}').hide()" />
             <select name="gender"
-                    onchange="$('#submit_companion_{{ companion.id }}').show()">
+                    onchange="$('#submit_companion_{{ companion.id }}').show();$('#companion_done_{{ companion.id }}').hide()">
                 <option value="M" 
                         {% if companion.gender = "M" %}selected="selected"{% endif %}>
                     {% trans "Male" %}

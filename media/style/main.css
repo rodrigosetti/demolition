@@ -110,7 +110,7 @@ html {
 
 body {
     background-color: #d3d3d3;
-    font-family: Georgia, serif;
+    font-family: Verdana, sans-serif;
     color: #3a3a3a;
     text-align: center;
     height: 100%;
@@ -171,7 +171,7 @@ input[type=text], input[type=password] {
     border: 1px solid #006;
     background: #ffc;
     color: #3a3a3a;
-    font-family: Georgia, serif;
+    font-family: Verdana, sans-serif;
 }
 
 input[type=text]:hover, input[type=password]:hover {
@@ -179,6 +179,9 @@ input[type=text]:hover, input[type=password]:hover {
     background: #ff6;
 }
 
+input[type=checkbox] {
+	margin-right: 50px;
+}
 
 input[type=submit], button, .button  {
     background: url(../image/button-bg.png) repeat-x top center;
@@ -191,10 +194,12 @@ input[type=submit], button, .button  {
     text-decoration: none;
     padding: 0 3px 0 3px;
     cursor: pointer;
+    font-family: Georgia, serif;
 }
 
 button {
     background: url(../image/button-bg-2.png) repeat-x top center;
+    font-family: Georgia, serif;
 }
 
 input[type=submit]:hover, button:hover, .button:hover {
@@ -226,7 +231,7 @@ input[type=submit]:hover, button:hover, .button:hover {
 }
 
 div#user {
-    padding: 0 20px 20px 0;
+    padding: 0 0 20px 0;
 }
 
 #user_forms form {
@@ -245,6 +250,7 @@ input[type=image] {
     background-color: #ff6;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+	text-align: center;
     padding: 2px;
 }
 
@@ -281,6 +287,7 @@ input[type=image] {
 #full_name {
     font-size: 22px;
     padding-bottom: 10px;
+    font-family: Georgia, serif;
 }
 
 /** Events menu styling **/
@@ -343,27 +350,38 @@ ul#events li a.selected {
     margin: 10px 0 10px 0;
 }
 
-#dates form {
-    display: inline;
-}
-
 #dates li {
     position: relative;
 }
 
+#dates li input[type=checkbox] {
+	left: 200px;
+	position: absolute;
+	background: red;
+}
+
 .datechecks {
     font-size: 12px;
+	text-align: left;
     position: absolute;
+	min-width: 40px;
     right: 10px;
 }
 
 #preferences {
     margin: 10px 0 10px 0;
     padding: 10px 0 10px 5px;
+	position: relative;
 }
 
 #preferences p {
     display: inline;
+}
+
+#preferences p:last-child {
+	position: absolute;
+	right: 0;
+	top: 10px;
 }
 
 #companions_edit {
@@ -381,11 +399,13 @@ ul#events li a.selected {
 }
 
 #companions li {
-    width: 400px;
+	position: relative;
 }
 
-#companions li img.remove {
-    float: right;
+#companions li .remove {
+	position: absolute;
+	right: 0px;
+	top: 5px;
 }
 
 #confirmed {
@@ -427,6 +447,7 @@ p#invitation_info {
 #comments h1 {
     font-size: 22px;
     margin-bottom: 10px;
+    font-family: Georgia, serif;
 }
 
 #comment_form p {

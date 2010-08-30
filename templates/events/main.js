@@ -24,11 +24,12 @@ function submituser() {
 		return false;
 	}
 
-    // send data
+	// show/hide stuff
 	$('#submit_user').hide();
 	$('#user_data_loader').show();
 	$('#user_data_done').hide();
 
+    // send data
     var data = {'first_name': first_name,
                'last_name': last_name,
                'email': email, 

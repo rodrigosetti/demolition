@@ -40,6 +40,10 @@ urlpatterns = patterns('',
 
     #### get ####
 
+    # get all name<email> addresses from users participating in event(staff only)
+    url(r'event/(?P<event_slug>.+)/email/', 'events.views.get_emails', 
+        name="emails_get"),
+
     # get all comments from event
     url(r'event/(?P<event_slug>.+)/comment/', 'events.views.get_comments', 
         name="comment_get"),

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
-from events.models import Event, Participation, PossibleDate, ConfirmedDate, Companion
+from events.models import Event, Participation, PossibleDate, ConfirmedDate, Companion, Person
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.template import RequestContext
@@ -161,3 +161,18 @@ def get_comments(request, event_slug):
                                "event": event},
                               context_instance=RequestContext(request))
 
+@login_required
+def get_emails(request, event_slug):
+    # checks if user is staff
+    if not request.user.is_staff:
+        return HttpResponseForbidden()
+
+    # checks if exist event
+    event = get_object_or_404(Event, slug=event_slug)
+
+    persons = [p for p in list(Person.objects.filter(user__is_active=True)) if
+               Participation.objects.filter(event=event, accepted=True, person=p).exists()]
+
+    # render all users from event
+    return render_to_response("events/emails.txt",
+                              {"persons": persons}, mimetype="text/plain")

@@ -1,0 +1,6 @@
+{% load names_extra %}
+
+{% for person in persons %}
+    "{{ person.user.get_full_name|capsname }}" <{{ person.user.email }}>,
+{% endfor %}
+

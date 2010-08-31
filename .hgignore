@@ -4,6 +4,8 @@ syntax: glob
 *.pyc
 *.mo
 *~
+~*
+*.orig
 demolition.db
 local_settings.py
 

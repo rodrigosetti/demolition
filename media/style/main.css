@@ -246,6 +246,10 @@ input[type=image] {
     vertical-align: middle;
 }
 
+select {
+    width: 120px;
+}
+
 .work_done {
     background-color: #ff6;
     -moz-border-radius: 5px;
@@ -491,9 +495,17 @@ p#invitation_info {
 
 #comment_list li .submit_date {
     position: absolute;
-    font-size: 12px;
+    font-size: 10px;
     right: 5px;
     bottom: 5px;
+}
+
+#comment_count {
+    font-family: Georgia, serif;
+}
+
+#comment_list li .comment_content {
+    font-size: 12px;
 }
 
 #comments_header {

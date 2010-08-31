@@ -2,22 +2,25 @@
 {% load i18n %} 
 {% load names_extra %} 
 
+<li id="comment_count">
+    {{ comment_count|apnumber }} 
+    {% trans "comment" %}{{ comment_count|pluralize }}:
+</li>
+
 {% for comment in comments reversed %}
-    {% if not comment.is_removed %}
     <li id="comment_{{ comment.id }}">
         <span class="submit_date">
             {{ comment.submit_date|naturalday }},
             {{ comment.submit_date|time:"H:i" }}
         </span>
         <p class="username">{{ comment.user.first_name|capsname }} {{ comment.user.last_name|capsname }}:</p>
-        <p>{{ comment.comment|urlize|linebreaksbr}}</p>
+        <p class="comment_content">{{ comment.comment|urlize|linebreaksbr}}</p>
         {% if comment.user == user %}
         <img src="{{ MEDIA_URL}}image/remove.png" title="{% trans "remove comment" %}"
              class="remove" alt="{% trans "remove" %}" 
              onclick="removecomment('{% url comment_del event.slug %}', '{% url comment_get event.slug %}', {{ comment.id }})"
              onmouseover="$(this).attr('src','{{ MEDIA_URL}}image/remove_focus.png')"
              onmouseout="$(this).attr('src','{{ MEDIA_URL}}image/remove.png')"/>
-        {% endif %}
     </li>
     {% endif %}
 {% empty %}

@@ -45,13 +45,13 @@ body {
 label {
     width: 115px;
     text-align: right;
-    float: left; 
+    float: left;
     margin: 0 10px 0 0;
     padding: 9px 0 0 0;
     font-size: 16px;
 }
 
-input {
+input, select {
     width: 220px;
     padding: 4px;
     margin: 0 0 10px 0;
@@ -60,19 +60,25 @@ input {
     font-family: Georgia, serif;
 }
 
-form#signup_form {
-    width: 400px;
-    text-align: left;
+#header {
+    padding-bottom: 30px;
+    border-bottom: 2px groove #c1d4e5; 
     margin: 0 auto 0 auto;
 }
 
-#header {
-    padding-bottom: 50px;
-    margin-left: 20px;
+form#signup_form {
+    text-align: center;
+    margin: 0 auto 0 auto;
+    padding-top: 20px;
+}
+
+form#signup_form p {
+    width: 400px;
+    margin: 0 auto 0 auto;
 }
 
 #submit_signup {
-    margin-top: 40px;
+    margin: 40px auto 0 auto;
     background: url(../image/button-bg-2.png) repeat-x top center;
     border: 1px solid #999;
     -moz-border-radius: 5px;

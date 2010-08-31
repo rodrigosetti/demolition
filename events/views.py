@@ -118,12 +118,21 @@ def participation_details(request, event_slug, is_ajax=False):
                                 * 100. / participations_count )
                            for date in PossibleDate.objects.filter(event=event) ]              
 
+                # get comments objects
+                comments = [c for c in 
+                            list(Comment.objects.filter(
+                                    content_type=ContentType.objects.get_for_model(Event),
+                                    object_pk=event.id))
+                            if not c.is_removed]
+
                 return render_to_response("events/participation.html", 
                                           {"participation": participation,
                                            "event": event,
                                            "dates": dates,
                                            "participations_count": participations_count,
                                            "persons_count" : persons_count,
+                                           "comments": comments, 
+                                           "comment_count" : len(comments),
                                            "companions": 
                                                 Companion.objects.filter(participation=participation)},
                                            context_instance=RequestContext(request))
@@ -153,11 +162,16 @@ def get_comments(request, event_slug):
                                       event = event)
 
     # get comments objects
-    comments = Comment.objects.filter(content_type=ContentType.objects.get_for_model(Event),
-                                      object_pk=event.id)
+    comments = [c for c in 
+                list(Comment.objects.filter(
+                        content_type=ContentType.objects.get_for_model(Event),
+                        object_pk=event.id))
+                if not c.is_removed]
 
     return render_to_response("comments/comment_list.html",
-                              {"comments": comments, "user": request.user,
+                              {"comments": comments, 
+                               "comment_count" : len(comments),
+                               "user": request.user,
                                "event": event},
                               context_instance=RequestContext(request))
 

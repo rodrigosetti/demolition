@@ -1,5 +1,4 @@
-Demolition
-----------
+# Demolition
 
 Demolition is a web application written in python using the excellent Django
 Framework.
@@ -18,23 +17,22 @@ fix bugs, change stuff. I'll be glad to merge any contributions.
 
 Right now I'm looking forward to build the following features:
 
-* Automating mailing to confirm acceptance of participations
-* Automating mailing to inform about confirmed events and other state changes
-* Some protection at sign up like captcha or email confirmation
-* Translations to any language you can help 
+ * Automating mailing to confirm acceptance of participations
+ * Automating mailing to inform about confirmed events and other state changes
+ * Some protection at sign up like captcha or email confirmation
+ * Translations to any language you can help 
 
-Installation
-------------
+## Installation
 
 To install the system follow the procedure to install any other Django project:
 
-1. Create a new file called local_settings.py which will be imported by
-   settings.py . There you can set local configurations like database
-   connection, language, path and url stuff(please refer to django
-   documentation)
+ 1. Create a new file called local_settings.py which will be imported by
+    settings.py . There you can set local configurations like database
+    connection, language, path and url stuff (please refer to django
+    documentation)
 
-2. Run: python manage.py syncapp in order to create the database tables.
+ 2. Run: python manage.py syncapp in order to create the database tables.
 
-3. Run: python manage.py compilemessages in order to create the localization
-   file(currently, portuguese only) 
+ 3. Run: python manage.py compilemessages in order to create the localization
+    file (currently, portuguese only) 
 
